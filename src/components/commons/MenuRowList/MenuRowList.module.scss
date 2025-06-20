@@ -1,0 +1,45 @@
+.itemRow {
+   display: inline-flex;
+   overflow: visible;
+   flex-direction: column;
+   cursor: pointer;
+   width: calc( 100% - 5px ); 
+}
+
+.title {
+   display: flex;
+   width: 100%;
+   color: #2C3E50;
+   font-size: 20px;
+   line-height: 20px;
+   font-weight: 800;
+   justify-content: space-between;
+   padding: 5px 0;
+
+   &IsOpen {
+      border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+   }
+}
+
+
+.openBtn {
+   display: inline-flex;
+   align-self: center;
+}
+
+.modal {
+   height: 0px;
+   overflow: hidden;
+   transition: all 0.3s;
+
+   &IsOpen {
+      height: 100%;
+      max-height: 250px;
+      overflow-y: auto;
+   }
+
+   &::-webkit-scrollbar-thumb {
+      border-color: #ccc;
+   }
+
+}

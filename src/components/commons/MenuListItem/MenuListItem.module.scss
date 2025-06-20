@@ -1,0 +1,18 @@
+.item {
+   width: 90%;
+   display: flex;
+   font-size: 16px;
+   line-height: 20px;
+   font-weight: 600;
+   color: rgba(44, 62, 80, 0.5);
+   justify-self: flex-end;
+   justify-content: space-between;
+   align-items: center;
+   padding: 2px 0;
+   margin-right: 5px;
+   cursor: pointer;
+
+   &:hover {
+      color: rgba(44, 62, 80, 0.8);
+   }
+}

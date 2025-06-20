@@ -1,0 +1,121 @@
+.formRow {
+   width: 100%;
+   position: relative;
+   padding-right: 27px;
+}
+
+.formInput {
+   margin-bottom: 15px;
+   border: none;
+   background-color: rgba(255, 255, 255, 0.781);
+   font-size: 18px;
+   line-height: 20px;
+   padding: 10px 10px;
+   outline: none;
+   border-radius: 8px;
+   color: #333333;
+   font-weight: 600;
+   width: 100%;
+   border-bottom: 5px solid #4cb8c4;
+   padding-right: 33px;
+   caret-color: #4cb8c4;
+   caret: 210px; 
+}
+
+.formLable {
+   transition: 0.3s;
+   color: #33333379;
+   position: absolute;
+   left: 15px;
+   top: 12px;
+   font-size: 18px;
+   font-weight: 600;
+}
+
+.formInputIndicator {
+   position: absolute;
+   right: 34px;
+   top: 10px;
+}
+
+.formInputInfo {
+   position: absolute;
+   color: #33333379;
+   right: 0px;
+   top: 10px;
+}
+
+.formInputInfo:hover {
+   color: #4cb8c4;
+}
+
+.formInput:not(:placeholder-shown) ~ .formLable,
+.formInput:focus ~ .formLable,
+.formInput:hover ~ .formLable,
+.formLable:hover {
+   color: #4cb8c4;
+   left: 4px;
+   top: 2px;
+   font-size: 12px;
+   font-weight: 100;
+}
+
+.formInput:focus ~ .formInputIndicator {
+   color: #4cb8c4;
+}
+
+.formInput:not(:placeholder-shown),
+.formInput:focus,
+.formInput:hover {
+   padding-top: 15px;
+   padding-bottom: 5px;
+}
+
+.checkedColor {
+   color: rgb(0, 200, 81);
+}
+
+.requireColor {
+   color: rgb(255, 136, 0);
+}
+
+.failColor {
+   color: rgb(255, 59, 48);
+}
+
+.defaultColor {
+   color: #33333379;
+}
+
+.formInputConditions {
+   visibility: hidden;
+   position: absolute;
+   top: 27px;
+   right: 18px;
+   z-index: 1;    
+   width: 60%;
+  background-color: #f0f8ff;
+   padding: 5px 5px 10px 5px;
+   border-radius: 10px;
+   border-top-right-radius: 0;
+   -webkit-box-shadow: 0px 0px 15px -3px black;
+   -moz-box-shadow: 0px 0px 15px -3px black;
+   box-shadow: 0px 0px 15px -3px black;
+}
+
+.formInputConditionsTitle {
+   margin-bottom: 5px;
+   text-align: center;
+   display: block;
+   font-size: 14px;
+}
+
+.formInputInfo:hover ~ .formInputConditions {
+   visibility: visible;
+}
+
+.formInputConditionsParagraph {
+   text-align: center;
+   letter-spacing: 0.05em;
+   word-spacing: 0.1em;
+}

@@ -1,0 +1,20 @@
+.navLink,
+.navButton {
+   padding: 3px 15px;
+   font-size: 20px;
+   border-radius: 7px;
+   font-weight: 400;
+   color: white;
+   margin-left: 10px;
+   line-height: 1;
+   transition: all 0.3s, color 0.3s;
+   background-color: #48bfee;
+
+   &:hover {
+      background-color: #3aa2cc;
+   }
+
+   &:active {
+      transform: scale( 0.95 );
+   }
+}

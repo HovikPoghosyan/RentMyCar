@@ -1,0 +1,40 @@
+.btn {
+   cursor: pointer;
+   display: inline-block;
+   padding: 3px 15px;
+   font-size: 25px;
+   border-radius: 7px;
+   font-weight: 400;
+   color: white;
+   background-color: #2b3d4f;
+   line-height: 1;
+   transition: all 0.3s, color 0.3s;
+
+   &:disabled {
+      background-color: #ccc;
+   }
+
+   // &:hover {
+   //    background-color: #48bfee;
+   // }
+
+   &:active {
+      transform: scale( 0.95 );
+   }
+
+   &:not(:disabled):hover::before {
+      left: 0;
+   }
+
+   &:not(:disabled):hover {
+      transform: scale(1.05);
+   }
+
+   &:active {
+      transform: scale(0.98);
+   }
+
+   &:disabled {
+      cursor: not-allowed;
+   }
+}

@@ -1,0 +1,30 @@
+.toTopBtn {
+   display: flex;
+   position: sticky;
+   bottom: 10px;
+   z-index: 999;
+   transition: all 0.3s;
+   
+   width: 40px;
+   height: 40px;
+   background: #48bfee;
+   color: #fff;
+   border-radius: 20px;
+   font-weight: 600;
+   font-size: 25px;
+   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+   align-items: center;
+   justify-content: center;
+   align-self: flex-end;
+   margin-right: 12px;
+   cursor: pointer;
+
+   &:hover { 
+      background: #3aa2cc;
+      transform: scale( 1.05 );
+   }
+
+   &:active {
+      transform: scale( 1 );
+   }
+}

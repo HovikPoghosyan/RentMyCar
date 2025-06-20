@@ -1,0 +1,102 @@
+.addCarPopupBack {
+   position: absolute;
+   right: 0;
+   left: 0;
+   top: 0;
+   bottom: 0;
+   margin: auto;
+   display: flex;
+   justify-content: center;
+   text-align: center;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(153, 153, 153, 0.5);
+   backdrop-filter: blur(1px);
+
+   &::-webkit-scrollbar-track {
+      background-color: transparent;
+      margin: 7px;
+   }
+}
+
+.modal {
+   background-color: #fff;
+   overflow-y: scroll;
+   position: fixed;
+   top: 10%;
+   width: 40%;
+   height: 80%;
+   border-radius: 15px;
+   display: flex;
+   flex-direction: column;
+   padding: 25px;
+   border: 5px solid #fff;
+   border-right-width: 0;
+}
+
+.btn {
+   margin: 20px 20px 0 20px;
+}
+
+.title {
+   font-weight: 900;
+   font-size: 35px;
+   color: rgb(72, 191, 238);
+   letter-spacing: -0.05em;
+   margin-bottom: 20px;
+   margin-top: -10px;
+}
+
+.descriptionBlock {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   border: 4px solid #787878;
+   border-radius: 15px;
+   background-color: #ccc;
+   margin-bottom: 15px;
+   padding: 5px;
+}
+
+.descriptionCount {
+   font-size: 12px;
+   line-height: 14px;
+   color: #2C3E50;
+   align-self: flex-end;
+}
+
+.descriptionArea {
+   width: 100%;
+   // border-radius: 15px;
+   border: none;
+   background: #ccc;
+   font-size: 18px;
+   line-height: 20px;
+   font-weight: 600;
+   color: #2C3E50;
+   resize: none;
+   outline: none;
+
+   &::-webkit-scrollbar {
+      width: 10px;
+   }
+
+   &::-webkit-scrollbar-track {
+      background-color: transparent;
+   }
+
+   &::-webkit-scrollbar-thumb {
+      padding: 5px;
+      background-color: rgba( 0, 0, 0, 0.5);
+      border-radius: 7px;
+   }
+
+   &::-webkit-scrollbar-thumb:hover {
+      background-color: #000000b3;
+   }
+
+
+   &::-webkit-scrollbar-thumb {
+      border: 2px solid #ccc;
+   }
+}

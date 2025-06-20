@@ -1,0 +1,156 @@
+.carCard {
+   background: #fff;
+   border-radius: 15px;
+   display: inline-flex;
+   flex-direction: column;
+   overflow: hidden;
+   box-shadow: 0px 0px 5px rgba( 0, 0, 0, 0.2 );
+   transition: 0.4s;
+   position: relative;
+   flex-grow: 1;
+   border: 2px solid #ccc;
+ 
+   &:hover {
+      transform: translateX( -5px ) translateY( -5px );
+      box-shadow: 5px 8px 5px rgba( 0, 0, 0, 0.4 );
+      border-color: #3aa2cc;
+   }
+}
+
+.photo {
+   width: 100%;
+   height: 200px;
+   object-fit: cover;
+   border: 10px solid #fff;
+   border-radius: 15px;
+}
+
+.name {
+   font-size: 22px;
+   margin-bottom: 8px;
+   color: #555;
+   font-weight: 600;
+}
+
+.details {
+   padding: 10px;
+   padding-top: 5px;
+   text-align: center;
+}
+
+.info {
+   font-size: 14px;
+   color: #555;
+   margin-bottom: 12px;
+}
+
+.price {
+   letter-spacing: 1px;
+   font-size: 20px;
+   font-weight: bold;
+   color: #555;
+   display: block;
+   margin-bottom: 15px;
+   object-fit: cover;
+}
+
+.rentBtn {
+   display: inline-block !important;
+   padding: 8px 16px !important;
+   color: #fff !important;
+   text-decoration: none !important;
+   border-radius: 25px !important;
+   font-size: 16px !important;
+   transition: 0.3s !important;
+   box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+   background: #48bfee !important;
+
+   &:hover {
+      transform: scale(1.05) !important;
+      background: #3aa2cc !important;
+   }
+
+   &:active {
+      transform: scale( 1 ) !important;
+   }
+}
+
+.removeBtn {
+   display: inline-block !important;
+   padding: 8px 16px !important;
+   color: #fff !important;
+   text-decoration: none !important;
+   border-radius: 25px !important;
+   font-size: 16px !important;
+   transition: 0.3s !important;
+   box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+   background: #2b3d4f !important;
+
+   &:hover {
+      transform: scale(1.05) !important;
+      background: #D94A4A !important;
+   }
+
+   &:active {
+      transform: scale( 1 ) !important;
+   }
+}
+
+.likeBtn {
+   cursor: pointer;
+   position: absolute;
+   right: 15px;
+   top: 15px;
+   margin: auto;
+   z-index: 1;
+   font-size: 25px;
+   color: #444;
+   color: #3aa2cc;
+   opacity: 0.4;
+   transition: all 0.3s;
+
+   &:hover {
+      opacity: 1;
+      transform: scale( 1.2 );
+   }
+
+   &:active {
+      transform: scale( 1 );
+   }
+
+   &Selected {
+      opacity: 1;
+      color: red;
+   }
+}
+
+.carCard .location, .carCard .contact {
+   font-size: 14px;
+   color: #444;
+   margin-bottom: 8px;
+}
+
+.infoButtonsRow {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 20px;
+   color: #555;
+   margin-bottom: 20px;
+}
+
+.infoButton {
+   font-size: 25px;
+   margin: 0 5px 0 5px;
+   cursor: pointer;
+   transition: all 0.3s;
+
+   &:hover {
+      color: #3aa2cc;
+      transform: scale( 1.2 );
+   }
+
+   &:active {
+      transform: scale( 1 );
+   }
+}

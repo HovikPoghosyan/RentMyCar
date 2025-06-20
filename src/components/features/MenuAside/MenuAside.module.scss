@@ -1,0 +1,26 @@
+.menuAside {
+   display: flex;
+   flex-direction: column;
+   position: sticky;
+   transition: all 0.3s;
+   z-index: 998;
+   top: 47px;
+   padding: 25px 10px;
+   height: calc( 100vh - 62px );
+   box-shadow: 15px 0px 10px -15px #999;
+   overflow: hidden;
+   width: 75px;
+
+   &:hover {
+      width: 350px;
+      overflow-y: auto;
+   }
+
+   &::-webkit-scrollbar {
+      width: 12px;
+   }
+
+   &::-webkit-scrollbar-track {
+      background-color: #fff;
+   }
+}
