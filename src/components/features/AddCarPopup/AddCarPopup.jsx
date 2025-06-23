@@ -56,7 +56,7 @@ function AddCarPopup() {
 
    const addCar = ( ) => { 
       setLoading( true );
-      addNewCar( dispatch, user.token , { 
+      addNewCar( user, { 
          model_id: newCar.model.id,
          city_id: newCar.location.id,
          seats: newCar.seats,
@@ -64,7 +64,7 @@ function AddCarPopup() {
          transmission: newCar.gear,
          fuel: newCar.fuel,
          images: newCar.images,
-      })
+      }, dispatch )
       .then(() => {
          setLoading( false );
          dispatch( closeAddCarPopup() );

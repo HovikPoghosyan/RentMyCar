@@ -33,7 +33,7 @@ function DropZone({ returnImages }) {
    }, [ droppedImages ])
    const onDrop = acceptedFiles => {
       const newImages = acceptedFiles.map( image => {
-         console.log('image: ', image);
+         
          if( !_.some( droppedImages, { name: image.name } ) && imageTypeRegExp.test( image.type ) ) {
             return {
                preview: URL.createObjectURL( image ),

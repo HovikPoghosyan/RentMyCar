@@ -12,14 +12,13 @@ import {
 
 import styles from './ListCard.module.scss';
 
-import { deletPost, getPosts } from 'CONSTANTS/Axios';
+import { deletPost, addFavorite, deletFavorite } from 'CONSTANTS/Axios';
 
 import Button from '../Button/Button';
 function  ListCard({ data, isPrivate = false }) {
    const dispatch = useDispatch();
    const [ isLiked, SetIsLiked ] = useState( false );
-   const token = useSelector( store => store.user.token );
-   const userName = useSelector( store => store.user.name );
+   const authUser = useSelector( store => store.user );
    const {
       id,
       model,
@@ -49,7 +48,9 @@ return (
                </span>
             :
                <span className = { classNames( styles.likeBtn, {[ styles.likeBtnSelected ] : isLiked }) }
-                  onClick = { () => SetIsLiked( !isLiked ) }
+                  onClick = { () => {
+                     SetIsLiked( !isLiked );
+                  } }
                >
                   <FontAwesomeIcon icon = { faHeart }/>
                </span>
@@ -76,11 +77,11 @@ return (
       <Button 
          name = { isPrivate ? "Remove" : "Rent Now" } 
          style = { classNames( styles.btn, isPrivate ? styles.removeBtn : styles.rentBtn ) }
-         functionality = { isPrivate ? () => { deletPost( token, id ); getPosts( userName, dispatch ) } : () => console.log('Renting')}
+         functionality = { isPrivate ? () => { deletPost( authUser, id, dispatch ) } : () => console.log('Renting')}
       />
       </div>
    </div>
-)
+)      
 };
 
 export default ListCard;

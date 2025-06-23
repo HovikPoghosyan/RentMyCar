@@ -118,7 +118,8 @@ function FormAside({ title, inputes, submitFunction }) {
                onToggle = { () => dispatch( toggleRememberMe() ) }
             >Remember Me</ToggleButton>
             <button
-               disabled = { buttonIsDisable }
+               // disabled = { buttonIsDisable }
+               disabled = { false }
                type = "submit"
                className = { styles.submitBtn }
             >{ loading ? "Loading..." : "Submit" }</button>
