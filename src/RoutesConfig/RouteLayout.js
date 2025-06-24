@@ -16,7 +16,7 @@ const RouteLayout = ({ Page, pageType, redirectPath }) => {
    const isAuthenticated = useSelector( store => store.user.isAuthenticated );
    
    useEffect(() => {
-      if ( isAuthenticated ) getPosts( user.name, dispatch );
+      if ( isAuthenticated ) getPosts( user, dispatch );
    }, [ isAuthenticated ])
 
    useEffect(() => {

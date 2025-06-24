@@ -78,17 +78,20 @@ const signUpUser = async ( userData, dispatch ) => {
    return data;
 };
 
-const getPosts = async ( userName, dispatch ) => {
+const getPosts = async ( user, dispatch ) => {
    dispatch( setLoading( true ));
    const data = await ajax( URLS.posts, {
-      headers: {},
-      method: 'get'
+      headers: {
+         'Authorization': `Bearer ${ user.token }`,
+      },
+      method: 'get',
    });
 
    if ( data.isFailed ) {
       dispatch( setLoading( false ) );
       return data;
    };
+   
    const allCars = data.map( car => ({
       id: car.id,
       model: car.model,
@@ -104,9 +107,7 @@ const getPosts = async ( userName, dispatch ) => {
       user: car.user,
    }));
 
-   console.log('allCars: ', allCars);
-
-   const ownCars = allCars.filter( car => car.user.name === userName )
+   const ownCars = allCars.filter( car => car.user.name === user.name )
 
    dispatch( setAllCars( allCars ) );
    dispatch( setOwnCars( ownCars ) ); 
@@ -114,8 +115,7 @@ const getPosts = async ( userName, dispatch ) => {
    return data;
 };
 
-const deletPost = async ( user, id, dispatch ) => {
-   dispatch( setLoading( true ) );
+const deletPost = async ( user, id ) => {
    const data = await ajax( URLS.deletPost + id , {
       headers: {
          'Authorization': `Bearer ${ user.token }`,
@@ -123,24 +123,19 @@ const deletPost = async ( user, id, dispatch ) => {
       method: 'DELETE',
    });
 
-   if ( data.isFailed ) {
-      dispatch( setLoading( false ));
-      return data;
-   };
-   
-   getPosts( user.name, dispatch );
-   dispatch( setLoading( false ));
+   if ( data.isFailed )  return data;
+
    return data;
 };
 
-const addFavorite = async ( user, id, dispatch ) => {
+const addFavorite = async ( user, id ) => {
    const data = await ajax( `${ URLS.posts }/${ id }/favorite`, {
       headers: {
          'Authorization': `Bearer ${ user.token }`,
       },
       method: 'post',
    });
-
+   
    if ( data.isFailed ) {
       return data;
    };
@@ -148,7 +143,7 @@ const addFavorite = async ( user, id, dispatch ) => {
    return data;
 };
 
-const deletFavorite = async ( user, id, dispatch ) => {
+const removeFavorite = async ( user, id ) => {
    const data = await ajax( `${ URLS.posts }/${ id }/favorite`, {
       headers: {
          'Authorization': `Bearer ${ user.token }`,
@@ -217,6 +212,6 @@ export {
    addNewCar,
    deletPost,
    addFavorite,
-   deletFavorite,
+   removeFavorite,
 };
 export default ajax;

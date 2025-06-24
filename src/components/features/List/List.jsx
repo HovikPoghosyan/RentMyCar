@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 
 function List({ data, isPrivate = false, columns = 4 }) {
    const loading = useSelector( store => store.list.loading );
-   const store = useSelector( store => store );
    
    return (
       <div className = { styles.list }>
@@ -23,13 +22,21 @@ function List({ data, isPrivate = false, columns = 4 }) {
          </div>
          <div className = { styles.listGrid }>
             {
-               loading ? <LoadingCircle /> : !data.length ? <p className = { styles.noCarsMessage }>There aren`t any car yet</p> : data.map(( car, id ) => (
-                     <div key = { id }
-                        data-aos="zoom-out-up"
-                        data-aos-offset="20"
-                        data-aos-anchor-placement="top-bottom">
-                        <ListCard data = { car } isPrivate = { isPrivate } />
-                     </div>
+               loading 
+                  ? 
+                     <LoadingCircle />
+                  : 
+                     !data.length 
+                        ? 
+                           <p className = { styles.noCarsMessage }>There aren`t any car yet</p> 
+                        :
+                           data.map(( car, id ) => (
+                              <div key = { id }
+                                 data-aos="zoom-out-up"
+                                 data-aos-offset="20"
+                                 data-aos-anchor-placement="top-bottom">
+                                 <ListCard data = { car } isPrivate = { isPrivate } />
+                              </div>
                   ))   
             }
             {

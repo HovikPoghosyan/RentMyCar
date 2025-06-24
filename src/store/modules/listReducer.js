@@ -39,6 +39,16 @@ const appSlice = createSlice({
       setLoading( state, { payload } ) {
          state.loading = payload;
       },
+      makeFavorite( state, { payload } ) {
+         state.allCars = state.allCars.map( car => car.id == payload ? { ...car, isFavorite: true } : car );
+      },
+      deletFavorite( state, { payload } ) {
+         state.allCars = state.allCars.map( car => car.id == payload ? { ...car, isFavorite: false } : car );
+      },
+      deletCar( state, { payload } ) {
+         state.allCars = state.allCars.filter( car => car.id !== payload );
+         state.ownCars = state.ownCars.filter( car => car.id !== payload );
+      },
    }
 });
 
@@ -46,6 +56,9 @@ export const {
    setAllCars,
    setOwnCars,
    setLoading,
+   deletCar,
+   makeFavorite,
+   deletFavorite,
    openAddCarPopup,
    closeAddCarPopup,
 } = appSlice.actions;

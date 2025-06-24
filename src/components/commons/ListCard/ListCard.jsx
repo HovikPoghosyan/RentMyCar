@@ -12,13 +12,14 @@ import {
 
 import styles from './ListCard.module.scss';
 
-import { deletPost, addFavorite, deletFavorite } from 'CONSTANTS/Axios';
+import { deletPost, addFavorite, removeFavorite  } from 'CONSTANTS/Axios';
+import { makeFavorite, deletFavorite, deletCar } from 'store/modules/listReducer';
 
 import Button from '../Button/Button';
 function  ListCard({ data, isPrivate = false }) {
    const dispatch = useDispatch();
-   const [ isLiked, SetIsLiked ] = useState( false );
    const authUser = useSelector( store => store.user );
+   const list = useSelector( store => store.list );
    const {
       id,
       model,
@@ -31,12 +32,22 @@ function  ListCard({ data, isPrivate = false }) {
       gear,
       description,
       user,
+      isFavorite,
       aosStyle,
    } = data;
    
    const handleCall = ( phoneNumber ) => window.location.href = `tel:${ phoneNumber }`;
    const handleEmail = ( email ) => window.location.href = `mailto:${ email }`;
    const openMap = ( location ) => window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent( location.name ), '_blank');
+   const handeleIsFavorite = () => {
+      if ( isFavorite ) {
+         dispatch( deletFavorite( id ) );
+         removeFavorite( authUser, id );
+      } else {
+         dispatch( makeFavorite( id ) );
+         addFavorite( authUser, id );
+      }
+   }
 
 return (
    <div className = { styles.carCard } data-aos = { aosStyle }>
@@ -47,10 +58,8 @@ return (
                   <FontAwesomeIcon icon = { faPen }/>
                </span>
             :
-               <span className = { classNames( styles.likeBtn, {[ styles.likeBtnSelected ] : isLiked }) }
-                  onClick = { () => {
-                     SetIsLiked( !isLiked );
-                  } }
+               <span className = { classNames( styles.likeBtn, {[ styles.likeBtnSelected ] : isFavorite }) }
+                  onClick = { handeleIsFavorite }
                >
                   <FontAwesomeIcon icon = { faHeart }/>
                </span>
@@ -58,7 +67,6 @@ return (
       }
       <img 
          src = { images[ 0 ].path  } 
-         loading = "lazy"
          alt = "Car Image"
          className = { styles.photo }
       />
@@ -77,7 +85,7 @@ return (
       <Button 
          name = { isPrivate ? "Remove" : "Rent Now" } 
          style = { classNames( styles.btn, isPrivate ? styles.removeBtn : styles.rentBtn ) }
-         functionality = { isPrivate ? () => { deletPost( authUser, id, dispatch ) } : () => console.log('Renting')}
+         functionality = { isPrivate ? () => { deletPost( authUser, id ); dispatch( deletCar( id ) ) } : () => console.log('Renting')}
       />
       </div>
    </div>

@@ -6,10 +6,12 @@
    height: 50px;
    -webkit-animation: spin 2s linear infinite;
    animation: spin 2s linear infinite;
-   margin-top: 5%;
    margin-bottom: auto;
-   align-self: center;
-   justify-self: center;
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 40%;
+   margin: auto;
 }
 
 @-webkit-keyframes spin {
