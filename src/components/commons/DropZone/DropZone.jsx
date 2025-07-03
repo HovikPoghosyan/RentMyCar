@@ -17,9 +17,10 @@ import styles from './DropZone.module.scss';
 import Button from 'components/commons/Button/Button';
 
  
-function DropZone({ returnImages }) {
-   const [ droppedImages, setDroppedImages ] = useState( [] );
+function DropZone({ returnImages, selectedImages }) {
+   const [ droppedImages, setDroppedImages ] = useState( selectedImages || [] );
    const imageTypeRegExp = /^image\//;
+   
    useEffect( () => {
       if( !droppedImages.length ) {
          returnImages({
@@ -28,9 +29,11 @@ function DropZone({ returnImages }) {
          });
       } else returnImages({
          category: 'Images',
-         values: droppedImages.map( item => item.image ),
+         values: droppedImages.map( item => ( item?.image || { id: item.id } ) ),
       });
    }, [ droppedImages ])
+
+
    const onDrop = acceptedFiles => {
       const newImages = acceptedFiles.map( image => {
          

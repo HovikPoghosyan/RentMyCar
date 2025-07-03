@@ -2,7 +2,8 @@ import React from 'react';
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-      isAddCarPopupOpen: false,
+   isAddCarPopupOpen: false,
+
 };
 
 const appSlice = createSlice({

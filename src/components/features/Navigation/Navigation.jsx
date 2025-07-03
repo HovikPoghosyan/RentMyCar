@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import styles from './Navigation.module.scss';
 
-import { openAddCarPopup } from 'store/modules/domReducer';
+import { openAddCarPopup } from 'store/modules/listReducer';
 
 import NavButton from 'components/commons/NavButton/NavButton';
 

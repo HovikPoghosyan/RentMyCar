@@ -13,29 +13,15 @@ import {
 import styles from './ListCard.module.scss';
 
 import { deletPost, addFavorite, removeFavorite  } from 'CONSTANTS/Axios';
-import { makeFavorite, deletFavorite, deletCar } from 'store/modules/listReducer';
+import { makeFavorite, deletFavorite, deletCar, openAddCarPopup } from 'store/modules/listReducer';
 
 import Button from '../Button/Button';
+
 function  ListCard({ data, isPrivate = false }) {
    const dispatch = useDispatch();
    const authUser = useSelector( store => store.user );
-   const list = useSelector( store => store.list );
-   const {
-      id,
-      model,
-      seats,
-      price,
-      bags,
-      location,
-      images,
-      fuel,
-      gear,
-      description,
-      user,
-      isFavorite,
-      aosStyle,
-   } = data;
-   
+   const { id, model, seats, price, bags, location, images, fuel, gear, description, user, isFavorite, aosStyle } = data;
+
    const handleCall = ( phoneNumber ) => window.location.href = `tel:${ phoneNumber }`;
    const handleEmail = ( email ) => window.location.href = `mailto:${ email }`;
    const openMap = ( location ) => window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent( location.name ), '_blank');
@@ -54,7 +40,9 @@ return (
       {
          isPrivate
             ?
-               <span className = { styles.likeBtn }>
+               <span className = { styles.likeBtn }
+                  onClick = { () => dispatch( openAddCarPopup( data ) ) }
+               >
                   <FontAwesomeIcon icon = { faPen }/>
                </span>
             :

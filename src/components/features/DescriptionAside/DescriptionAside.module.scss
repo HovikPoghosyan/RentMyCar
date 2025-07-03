@@ -19,3 +19,41 @@
    font-size: 1.5em;
    line-height: 1.6;
 }
+
+@media ( max-width: 1200px ) {
+
+   .descriptionTitle {
+      font-size: 2.25em;
+   }
+}
+
+@media ( max-width: 992px ) {
+   .descriptionParagraph {
+      font-size: 1.3em;
+      line-height: 1.6;
+   }
+
+   .descriptionTitle {
+      font-size: 2em;
+   }
+}
+
+@media ( max-width: 768px ) {
+
+   .description {
+      width: 80%;
+      text-align: center;
+   }
+   
+   .descriptionTitle {
+      font-size: 2.5em;
+   }
+
+   .descriptionParagraph {
+      // display: none;
+      text-align: center;
+      font-size: 1.5em;
+      line-height: 1.6;
+      margin-bottom: 50px;
+   }
+}

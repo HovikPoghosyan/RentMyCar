@@ -13,7 +13,6 @@ import MenuListItem from 'components/commons/MenuListItem/MenuListItem'
 
 function MenuRowList({ title, itemsList = [], type, selectedValues, returnValue }) {
    const [ isOpen, setIsOpen ] = useState( false );
-
    return (
       <div className = { styles.itemRow }>
          <span className = { classNames( styles.title, {[ styles.titleIsOpen ]: isOpen }) }

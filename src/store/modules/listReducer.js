@@ -18,6 +18,8 @@ const initialState = {
       fuel: undefined,
    },
    loading: false,
+   isAddCarPopupOpen: false,
+   editingCar: false,
 };
 
 const appSlice = createSlice({
@@ -48,6 +50,14 @@ const appSlice = createSlice({
       deletCar( state, { payload } ) {
          state.allCars = state.allCars.filter( car => car.id !== payload );
          state.ownCars = state.ownCars.filter( car => car.id !== payload );
+      },
+      openAddCarPopup( state, { payload } ) {
+         state.isAddCarPopupOpen = true;
+         state.editingCar = payload;
+      },
+      closeAddCarPopup( state ) {
+         state.isAddCarPopupOpen = false;
+         state.editingCar = false;
       },
    }
 });

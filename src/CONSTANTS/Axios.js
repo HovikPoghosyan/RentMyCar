@@ -3,6 +3,7 @@ import axios from "axios";
 import { setAllCars, setOwnCars, setLoading } from "store/modules/listReducer";
 import { setUser, setUserFalse } from "store/modules/userReducer";
 import { addCountries, addModels } from "store/modules/menuReducer";
+import { current } from "@reduxjs/toolkit";
 
 const API_BASE = 'https://retmycar-production.up.railway.app/api';
 const URLS = {
@@ -91,7 +92,7 @@ const getPosts = async ( user, dispatch ) => {
       dispatch( setLoading( false ) );
       return data;
    };
-   
+
    const allCars = data.map( car => ({
       id: car.id,
       model: car.model,
@@ -106,8 +107,8 @@ const getPosts = async ( user, dispatch ) => {
       isFavorite: car.is_favorite,
       user: car.user,
    }));
-
-   const ownCars = allCars.filter( car => car.user.name === user.name )
+   
+   const ownCars = allCars.filter( current => current.user.id == user.id );
 
    dispatch( setAllCars( allCars ) );
    dispatch( setOwnCars( ownCars ) ); 
@@ -203,6 +204,31 @@ const addNewCar = async ( user, newCarData, dispatch ) => {
    return data;
 };
 
+const updateCar = async ( user, updatedCarData, dispatch ) => {
+   dispatch( setLoading( true ) );
+   console.log('updatedCarData: ', { ...updatedCarData})
+   const data = await ajax( `${ URLS.posts }/${ updatedCarData.id }`, {
+      method: 'post',
+      headers: {
+         'Content-Type': 'multipart/form-data', 
+         'Authorization': `Bearer ${ user.token }`,
+      },
+      data: {
+         ...updatedCarData,
+         _method: 'PUT',
+      }
+   } );
+
+   if ( data.isFailed ) {
+      dispatch( setLoading( false ) );
+      return data;
+   };
+   
+   getPosts( user.name, dispatch );
+   dispatch( setLoading( false ) );
+   return data;
+};
+
 export {
    loginUser,
    signUpUser,
@@ -210,6 +236,7 @@ export {
    getCountries,
    getModels,
    addNewCar,
+   updateCar,
    deletPost,
    addFavorite,
    removeFavorite,
