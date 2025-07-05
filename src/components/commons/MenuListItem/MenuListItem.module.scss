@@ -16,3 +16,11 @@
       color: rgba(44, 62, 80, 0.8);
    }
 }
+
+
+@media ( max-width: 768px ) {
+   .item {
+      font-size: 12px;
+      line-height: 16px;
+   }
+}

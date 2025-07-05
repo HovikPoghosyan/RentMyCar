@@ -1,7 +1,7 @@
 .toTopBtn {
    display: flex;
    position: sticky;
-   bottom: 10px;
+   bottom: 50px;
    z-index: 999;
    transition: all 0.3s;
    
@@ -26,5 +26,17 @@
 
    &:active {
       transform: scale( 1 );
+   }
+}
+
+@media ( max-width: 992px ) {
+   .toTopBtn {
+      font-size: 23px;
+   }
+}
+
+@media ( max-width: 768px ) {
+   .toTopBtn {
+      font-size: 20px;
    }
 }

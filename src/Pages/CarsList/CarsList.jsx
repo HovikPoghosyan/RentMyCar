@@ -1,22 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import styles from './CarsList.module.scss';
 
-import { getPosts } from 'CONSTANTS/Axios';
+import filterCarsList from 'CONSTANTS/FilteCarsList';
 
 import List from 'components/features/List/List';
 import MenuAside from 'components/features/MenuAside/MenuAside';
 
 function CarsList() {
    const allCars = useSelector( store => store.list.allCars );
-
+   const [ carsData, setCarsData ] = useState( [ ...allCars ] );
+   const sorting = useSelector( store => store.list.sorting );
+   const filters = useSelector( store => store.menu.selectedValues );
+   
+   useEffect( () => {
+      setCarsData( filterCarsList( { ...sorting, ...filters }, allCars ) );
+   }, [ sorting, filters, allCars ])
    return (
       <main className = { styles.main }>
          <div className = { classNames( 'container', styles.container ) }>
             <MenuAside />
-            <List data = { allCars }/>
+            <List data = { carsData }/>
          </div>
       </main>
    )

@@ -7,13 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './FormAside.module.scss';
 
+import { toggleRememberMe } from 'store/modules/userReducer';
+
 import formValidationTest, {
    conditions,
 } from 'formValidationTest.js';
 
 import FormInput from 'components/commons/FormInput/FormInput';
 import ToggleButton from 'components/commons/ToggleButton/ToggleButton';
-import { toggleRememberMe } from 'store/modules/userReducer';
 
 
 function FormAside({ title, inputes, submitFunction }) {
@@ -42,8 +43,6 @@ function FormAside({ title, inputes, submitFunction }) {
       setButtonIsDisable( true );
       submitFunction( formData, dispatch )
       .then(( result ) => {
-         console.log('result: ', result);
-
          if( result.isFailed ) setErrorMessage( result.errors.message );
 
          if ( result.isFailed && title == 'LogIn' && result.errors?.list ) {
@@ -115,7 +114,7 @@ function FormAside({ title, inputes, submitFunction }) {
             })}
             <ToggleButton 
                isChecked = { rememberMe } 
-               onToggle = { () => dispatch( toggleRememberMe() ) }
+               onToggle = { () => dispatch( toggleRememberMe( ) ) }
             >Remember Me</ToggleButton>
             <button
                // disabled = { buttonIsDisable }

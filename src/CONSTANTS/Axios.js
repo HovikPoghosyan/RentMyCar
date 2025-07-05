@@ -3,7 +3,6 @@ import axios from "axios";
 import { setAllCars, setOwnCars, setLoading } from "store/modules/listReducer";
 import { setUser, setUserFalse } from "store/modules/userReducer";
 import { addCountries, addModels } from "store/modules/menuReducer";
-import { current } from "@reduxjs/toolkit";
 
 const API_BASE = 'https://retmycar-production.up.railway.app/api';
 const URLS = {
@@ -56,7 +55,7 @@ const loginUser = async ( userData, dispatch ) => {
       dispatch( setUserFalse() );
       return data;
    }
-
+   
    dispatch( setUser({ ...userData, token: data.token, ...data.user }) );
    return data;
 };
@@ -108,9 +107,11 @@ const getPosts = async ( user, dispatch ) => {
       user: car.user,
    }));
    
-   const ownCars = allCars.filter( current => current.user.id == user.id );
-
-   dispatch( setAllCars( allCars ) );
+   const ownCars = allCars.filter( current => current.user.id === user.id );
+   console.log('user: ', user)
+   console.log('allCars: ', allCars)
+   console.log('ownCars: ', ownCars)
+   dispatch( setAllCars( allCars  ) );
    dispatch( setOwnCars( ownCars ) ); 
    dispatch( setLoading( false ) );
    return data;

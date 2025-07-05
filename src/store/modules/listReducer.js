@@ -1,21 +1,12 @@
-import React from 'react';
 import { createSlice } from "@reduxjs/toolkit";
-import LoadingCircle from 'components/features/LoadingCircle/LoadingCircle';
 
 const initialState = {
    allCars: [],
    ownCars: [],
    sorting: {
       showFavorites: false,
-      type: undefined,
-      models: undefined,
-      seats: undefined,
-      minPrice: undefined,
-      maxPrice: undefined,
-      bags: undefined,  
-      location: undefined,
-      transmission: undefined,
-      fuel: undefined,
+      cheaper: false,
+      moreExpensive: false,
    },
    loading: false,
    isAddCarPopupOpen: false,
@@ -59,6 +50,9 @@ const appSlice = createSlice({
          state.isAddCarPopupOpen = false;
          state.editingCar = false;
       },
+      setSorting( state, { payload } ) {
+         state.sorting = { ...state.sorting, ...payload }
+      }
    }
 });
 
@@ -66,6 +60,7 @@ export const {
    setAllCars,
    setOwnCars,
    setLoading,
+   setSorting,
    deletCar,
    makeFavorite,
    deletFavorite,

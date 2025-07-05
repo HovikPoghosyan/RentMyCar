@@ -13,3 +13,23 @@
    color: rgb(72, 191, 238);
    letter-spacing: -0.1em;
 }
+
+@media ( max-width: 992px ) {
+   .logo {
+      font-size: 31px;
+   }
+
+   .logoThin {
+      font-size: 31px;
+   }
+}
+
+@media ( max-width: 768px ) {
+   .logo {
+      font-size: 28px;
+   }
+
+   .logoThin {
+      font-size: 28px;
+   }
+}

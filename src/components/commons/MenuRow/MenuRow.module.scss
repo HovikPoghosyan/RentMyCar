@@ -95,3 +95,32 @@
    display: flex;
 }
 
+
+@media ( max-width: 768px ) {
+   .menuAsideRow {
+      &Main {
+         font-size: 20px;
+         line-height: 25px;
+      }
+
+      &Btn {
+         font-size: 12px;
+         line-height: 16px;
+      }
+   }
+}
+
+
+@media ( max-width: 992px ) {
+   .menuAsideRow {
+      &Main {
+         font-size: 23px;
+         line-height: 28px;
+      }
+
+      &Btn {
+         font-size: 14px;
+         line-height: 18px;
+      }
+   }
+}

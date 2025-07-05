@@ -24,7 +24,9 @@
    overflow-y: scroll;
    position: fixed;
    top: 10%;
-   width: 40%;
+   width: 80%;
+   min-width: 300px;
+   max-width: 420px;
    height: 80%;
    border-radius: 15px;
    display: flex;

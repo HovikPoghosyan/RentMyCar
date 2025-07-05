@@ -1,40 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-      name: undefined,
-      email: undefined,
-      id: undefined,
-      token: undefined,
-      favoriteIds: undefined,
-      rememberMe: false,
-      isAuthenticated: undefined,
+   name: undefined,
+   email: undefined,
+   id: undefined,
+   token: undefined,
+   favoriteIds: undefined,
+   rememberMe: false,
+   isAuthenticated: undefined,
 };
 
 const appSlice = createSlice({
    name: 'user',
    initialState,
    reducers: {
-      setUser( user, { payload } ) {
-         return { 
-            ...user, 
+      setUser( state, { payload } ) {
+         state = { 
+            ...state, 
             ...payload, 
-            isAuthenticated: true 
+            isAuthenticated: true,
          };
       },
-      setUserFalse( user ) {
-         return {
-            ...user,
-            isAuthenticated: false
-         };
+      setUserFalse( state ) {
+         state.isAuthenticated = false;
       },
-      toggleRememberMe( user ) {
-         return {
-            ...user,
-            rememberMe: !user.rememberMe,
-         }
+      toggleRememberMe( state ) {
+         state.rememberMe = !state.rememberMe;
       },
-      signOut() {
-         return {
+      signOut( state ) {
+         state = {
             ...initialState,
             isAuthenticated: false,
          };

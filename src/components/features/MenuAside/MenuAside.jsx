@@ -34,8 +34,9 @@ function MenuAside() {
    const selectedValues = useSelector( store => store.menu.selectedValues );
    const [ isHovered, setIsHovered ] = useState( false );
    const getData = ( newValues ) => {
-      if ( !!newValues.values.length ) {
-         const name = newValues.category;
+      const name = newValues?.category;
+      
+      if ( newValues.values.length != 0 ) {
          let isUpdated = false;
          newValues.values.map( item => {
             const title = item?.title;
@@ -46,8 +47,9 @@ function MenuAside() {
          }) 
          if ( !isUpdated ) {
             return dispatch( setSelectedValues({[ name.toLowerCase() ]: newValues.values.map( item => item.value ) }) )
-         }
-      }
+         } 
+      } else if ( [ 'seats', 'price', 'bags' ].includes( name.toLowerCase() ) ) dispatch( setSelectedValues({ [ 'min' + name ]: [], [ 'max' + name ]: [] }) );
+      else dispatch( setSelectedValues({ [ name.toLowerCase() ]: [] }) );
    }
    useEffect(() => {
       getCountries( dispatch );
@@ -88,8 +90,8 @@ function MenuAside() {
          />
          <MenuRowHOC returnData = { getData } title = "Price" type = "check" icon = { <FontAwesomeIcon icon = { faHandHoldingDollar }/> } isOpen = { isHovered }
             itemsList = {[
-               { type: 'list', title: 'Min', list: Array.from({ length: 10 }, ( _, i ) => ({ name: (( i + 1 ) * 10 ) + '$' }) ), listType: 'select' },
-               { type: 'list', title: 'Max', list: Array.from({ length: 10 }, ( _, i ) => ({ name: (( i + 1 ) * 10 ) + '$' }) ), listType: 'select' }]}
+               { type: 'list', title: 'Min', list: Array.from({ length: 20 }, ( _, i ) => ({ name: (( i + 1 ) * 10 ) + '$' }) ), listType: 'select' },
+               { type: 'list', title: 'Max', list: Array.from({ length: 20 }, ( _, i ) => ({ name: (( i + 1 ) * 10 ) + '$' }) ), listType: 'select' }]}
          />
          <MenuRowHOC returnData = { getData } title = "Bags" type = "check" icon = { <FontAwesomeIcon icon = { faSuitcaseRolling }/> } isOpen = { isHovered }
             itemsList = {[

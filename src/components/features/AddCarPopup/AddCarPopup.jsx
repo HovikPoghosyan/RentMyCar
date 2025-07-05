@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { 
    faCarRear,
    faGasPump,
-   faCircleUser,
    faMapLocationDot,
    faSuitcaseRolling,
    faHandHoldingDollar,
@@ -23,8 +22,6 @@ import DropZone from 'components/commons/DropZone/DropZone';
 import Button from 'components/commons/Button/Button';
 
 import { addNewCar, updateCar } from 'CONSTANTS/Axios';
-import DescriptionAside from '../DescriptionAside/DescriptionAside';
-import { current } from '@reduxjs/toolkit';
 
 function AddCarPopup( ) {
    const dispatch = useDispatch();
@@ -204,7 +201,7 @@ function AddCarPopup( ) {
             </div>
             <DropZone 
                returnImages = { getData }
-               selectedImages = { editingCar.images.map( ({ id, path }) => ({
+               selectedImages = { editingCar?.images.map( ({ id, path }) => ({
                      preview: path,
                      name: path.split('/').pop(),
                      id: id,

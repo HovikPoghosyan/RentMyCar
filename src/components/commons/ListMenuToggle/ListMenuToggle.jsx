@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 import styles from './ListMenuToggle.module.scss';
 
-function ListMenuToggle({ name, valueOne, valueTwo, startValue }) {
+function ListMenuToggle({ name, valueOne, valueTwo, startValue, onToggle }) {
 
 return (
-      <div className = { styles.toggle }>
+      <div 
+         className = { styles.toggle }
+         >
          <input
             name = { name }
             type = 'radio'
             id = { valueOne }
             className = { styles.toggleInput }
+            onClick = { ( ) => onToggle( valueOne ) }
             defaultChecked = { valueOne === startValue }
          />
          <label htmlFor = { valueOne }
@@ -22,6 +25,7 @@ return (
             type = 'radio'
             id = { valueTwo }
             className = { styles.toggleInput }  
+            onClick = { ( ) => onToggle( valueTwo ) }
             defaultChecked = { valueTwo === startValue }
          />
          <label htmlFor = { valueTwo }

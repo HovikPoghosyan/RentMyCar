@@ -10,10 +10,7 @@ function ToggleButton({ children,  isChecked = false, onToggle }) {
             <input id = "toggle" checked = { isChecked } onChange = { onToggle } type = "checkbox" />
             <span className = { styles.slider }></span>
          </label>
-         <span onClick={ () => {
-            console.log('toggleName')
-            onToggle();
-         } } className = { styles.name }>{ children }</span>
+         <span onClick = { onToggle } className = { styles.name }>{ children }</span>
       </div>
    )
 }
