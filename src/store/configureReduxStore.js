@@ -1,4 +1,3 @@
-import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 
 import userReducer from 'store/modules/userReducer';
@@ -6,7 +5,6 @@ import domReducer from 'store/modules/domReducer';
 import listReducer from 'store/modules/listReducer';
 import menuReducer from 'store/modules/menuReducer';
 
-import userMiddleware from './middlewares/userMiddleware';
 
 function configureReduxStore() {
    const store = configureStore({
@@ -16,7 +14,7 @@ function configureReduxStore() {
          list: listReducer,
          menu: menuReducer,
       },
-      middleware: ( getDefaultMiddleware ) => getDefaultMiddleware().concat( userMiddleware ),
+      middleware: ( getDefaultMiddleware ) => getDefaultMiddleware().concat( ),
    })
 
    return store;

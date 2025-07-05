@@ -1,9 +1,11 @@
 import React, { 
-   useEffect,
-   useState,
+   useEffect, 
+   useState 
 } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { 
+   useDispatch, 
+   useSelector
+} from 'react-redux';
 import { 
    faCarRear,
    faGasPump,
@@ -14,25 +16,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import styles from './MenuAside.module.scss';
-
+import { setSelectedValues } from 'store/modules/menuReducer';
 import { signOut } from 'store/modules/userReducer';
 
-import MenuRowHOC from 'components/commons/MenuRowHOC/MenuRowHOC';
+import { getCountries, getModels } from 'CONSTANTS/Axios';
+
 import PassengerSVG from 'assets/icons/Passenger';
 import TransmissionSVG from 'assets/icons/Transmission';
 
+import MenuRowHOC from 'components/commons/MenuRowHOC/MenuRowHOC';
 
-import { getCountries, getModels } from 'CONSTANTS/Axios';
-import { setSelectedValues } from 'store/modules/menuReducer';
+import styles from './MenuAside.module.scss';
 
 function MenuAside() {
    const dispatch = useDispatch();
-   const user = useSelector( store => store.user );
+   const [ isHovered, setIsHovered ] = useState( false );
    const countries = useSelector( store => store.menu.countries );
    const carModels = useSelector( store => store.menu.models );
-   const selectedValues = useSelector( store => store.menu.selectedValues );
-   const [ isHovered, setIsHovered ] = useState( false );
+   
+   useEffect(() => { getCountries( dispatch ); getModels( dispatch ) }, [])
+
    const getData = ( newValues ) => {
       const name = newValues?.category;
       
@@ -51,10 +54,6 @@ function MenuAside() {
       } else if ( [ 'seats', 'price', 'bags' ].includes( name.toLowerCase() ) ) dispatch( setSelectedValues({ [ 'min' + name ]: [], [ 'max' + name ]: [] }) );
       else dispatch( setSelectedValues({ [ name.toLowerCase() ]: [] }) );
    }
-   useEffect(() => {
-      getCountries( dispatch );
-      getModels( dispatch );
-   }, [])
 
    return ( 
       <aside 

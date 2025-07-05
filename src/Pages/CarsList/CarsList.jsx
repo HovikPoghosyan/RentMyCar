@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
-import styles from './CarsList.module.scss';
+import classNames from 'classnames';
 
 import filterCarsList from 'CONSTANTS/FilteCarsList';
 
 import List from 'components/features/List/List';
 import MenuAside from 'components/features/MenuAside/MenuAside';
+
+import styles from './CarsList.module.scss';
 
 function CarsList() {
    const allCars = useSelector( store => store.list.allCars );

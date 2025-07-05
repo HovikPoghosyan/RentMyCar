@@ -1,5 +1,6 @@
 import React, { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+
 import RouteLayout from './RouteLayout';
 
 const App = lazy(() => import('App/App'));

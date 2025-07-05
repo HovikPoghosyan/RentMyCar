@@ -1,11 +1,12 @@
 import React from 'react';
+
 import classNames from 'classnames';
 
 import styles from './ListMenuToggle.module.scss';
 
 function ListMenuToggle({ name, valueOne, valueTwo, startValue, onToggle }) {
 
-return (
+   return (
       <div 
          className = { styles.toggle }
          >

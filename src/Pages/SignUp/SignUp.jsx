@@ -1,12 +1,13 @@
 import React from 'react';
+
 import classNames from 'classnames';
 
-import styles from './SignUp.module.scss';
+import { signUpUser } from 'CONSTANTS/Axios';
 
 import DescriptionAside from 'components/features/DescriptionAside/DescriptionAside';
 import FormAside from 'components/features/FormAside/FormAside';
 
-import { signUpUser } from 'CONSTANTS/Axios';
+import styles from './SignUp.module.scss';
 
 function SignUp() {
    

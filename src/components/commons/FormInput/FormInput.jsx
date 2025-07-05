@@ -1,6 +1,7 @@
 import React, {
    useRef,
 } from 'react';
+
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -14,6 +15,7 @@ import styles from './FormInput.module.scss';
 
 
 function FormInput({ name, placeholder, value, onChange, status, type, conditions }) {
+   const inputRef = useRef( null );
    
    const indicatorStyle = {
       undefined: { icon: faCheckCircle, style: styles.defaultColor },
@@ -22,7 +24,6 @@ function FormInput({ name, placeholder, value, onChange, status, type, condition
       fail: { icon: faXmarkCircle, style: styles.failColor },
    };
    const { icon: faIcon, style: faStyle } = indicatorStyle[ status ] || {};
-   const inputRef = useRef( null );
    
    return (
       <div className = { styles.formRow }>

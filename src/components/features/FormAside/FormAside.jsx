@@ -18,14 +18,40 @@ import ToggleButton from 'components/commons/ToggleButton/ToggleButton';
 
 
 function FormAside({ title, inputes, submitFunction }) {
+   const dispatch = useDispatch();
    const [ isOnline, setIsOnline ] = useState( navigator.onLine );
    const [ buttonIsDisable, setButtonIsDisable ] = useState( true );
    const [ errorMessage, setErrorMessage ] = useState( null );
    const [ loading, setloading ] = useState( false );
    const [ errorsList, setErrorsList ] = useState( Object.keys(inputes).reduce(( formData, inputName ) => ({ ...formData, [ inputName ]: undefined }), {}) );
    const [ formData, setFormData ] = useState( Object.keys(inputes).reduce(( formData, inputName ) => ({ ...formData, [ inputName ]: '' }), {}) );
-   const dispatch = useDispatch();
    const rememberMe = useSelector( store => store.user.rememberMe );
+   
+   useEffect(() => {
+      const isAllChecked = Object.values( errorsList ).every( value => value === 'checked' );
+      setButtonIsDisable( !isAllChecked );
+   }, [ errorsList ]);
+
+   useEffect(() => {
+      setErrorMessage( null );
+   }, [ formData ])
+   useEffect(() => {
+      if ( !isOnline ) setErrorMessage( 'Network Error' );
+      else setErrorMessage( null );
+   }, [ isOnline ])
+   
+   useEffect(() => {
+      const handleOnline = () => setIsOnline( true );
+      const handleOffline = () => setIsOnline( false );
+
+      window.addEventListener('online', handleOnline);
+      window.addEventListener('offline', handleOffline);
+
+      return () => {
+         window.removeEventListener('online', handleOnline);
+         window.removeEventListener('offline', handleOffline);
+      };
+   }, []);
    
    const handleInputChange = ( event, inputName ) => {
       event.preventDefault();
@@ -66,32 +92,6 @@ function FormAside({ title, inputes, submitFunction }) {
       });
    };
 
-   useEffect(() => {
-      const isAllChecked = Object.values( errorsList ).every( value => value === 'checked' );
-      setButtonIsDisable( !isAllChecked );
-   }, [ errorsList ]);
-
-   useEffect(() => {
-      setErrorMessage( null );
-   }, [ formData ])
-   useEffect(() => {
-      if ( !isOnline ) setErrorMessage( 'Network Error' );
-      else setErrorMessage( null );
-   }, [ isOnline ])
-   
-   useEffect(() => {
-      const handleOnline = () => setIsOnline( true );
-      const handleOffline = () => setIsOnline( false );
-
-      window.addEventListener('online', handleOnline);
-      window.addEventListener('offline', handleOffline);
-
-      return () => {
-         window.removeEventListener('online', handleOnline);
-         window.removeEventListener('offline', handleOffline);
-      };
-  }, []);
-
    return ( 
       <aside className = { styles.formAside }>
          <form className = { styles.form } onSubmit = { submitData }>
@@ -117,8 +117,7 @@ function FormAside({ title, inputes, submitFunction }) {
                onToggle = { () => dispatch( toggleRememberMe( ) ) }
             >Remember Me</ToggleButton>
             <button
-               // disabled = { buttonIsDisable }
-               disabled = { false }
+               disabled = { buttonIsDisable }
                type = "submit"
                className = { styles.submitBtn }
             >{ loading ? "Loading..." : "Submit" }</button>

@@ -50,7 +50,6 @@ const loginUser = async ( userData, dispatch ) => {
          password: userData?.password,
       },
    });
-
    if ( data.isFailed ) {
       dispatch( setUserFalse() );
       return data;

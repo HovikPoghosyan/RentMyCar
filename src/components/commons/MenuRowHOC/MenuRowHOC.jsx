@@ -1,4 +1,5 @@
 import React, { useEffect, useState, memo } from 'react';
+
 import _ from 'lodash';
 
 import MenuRow from 'components/commons/MenuRow/MenuRow';
@@ -7,12 +8,7 @@ import MenuListItem from 'components/commons/MenuListItem/MenuListItem';
 
 function MenuRowHOC({ title, icon, itemsList, isOpen, showValue = false, type, returnData, selectedValue }) {
    const [ values, setValues ] = useState( selectedValue ? [{ title: selectedValue?.title, value: selectedValue.value }] : []);
-   const toggleValue = ( newValue, listType ) => {
-      const newValueExists = _.some( values, obj => _.isMatch( obj, newValue ));
-      if ( type == 'select' ) setValues( newValueExists ? [] : [ newValue ] );
-      else if ( type == 'check' && listType == 'select' ) setValues( newValueExists ? _.filter( values, obj => !_.isMatch( obj, newValue )) : [ ..._.filter( values, obj => obj.title != newValue.title ), newValue ] );
-      else  setValues( newValueExists ? _.filter( values, obj => !_.isMatch(obj, newValue )) : [ ...values, newValue ] );
-   };
+
    useEffect(() => {
       if ( returnData ) {
          if ( type == 'select' ) returnData({
@@ -25,6 +21,13 @@ function MenuRowHOC({ title, icon, itemsList, isOpen, showValue = false, type, r
          });
       }
    }, [ values ]);
+
+   const toggleValue = ( newValue, listType ) => {
+      const newValueExists = _.some( values, obj => _.isMatch( obj, newValue ));
+      if ( type == 'select' ) setValues( newValueExists ? [] : [ newValue ] );
+      else if ( type == 'check' && listType == 'select' ) setValues( newValueExists ? _.filter( values, obj => !_.isMatch( obj, newValue )) : [ ..._.filter( values, obj => obj.title != newValue.title ), newValue ] );
+      else  setValues( newValueExists ? _.filter( values, obj => !_.isMatch(obj, newValue )) : [ ...values, newValue ] );
+   };
    
    return (
       <MenuRow title = { showValue ? ( values?.[0]?.value?.name || values?.[0]?.value || title ) : title } icon = { icon } fullView = { isOpen } >

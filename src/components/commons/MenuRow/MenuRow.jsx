@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -11,9 +12,7 @@ import styles from './MenuRow.module.scss';
 function MenuRow({ title, icon, children, fullView = true, }) {
    const [ isOpen, setIsOpen ] = useState( false );
 
-   useEffect(() => {
-      if ( !fullView ) setIsOpen( false );
-   }, [ fullView ])
+   useEffect(() => { if ( !fullView ) setIsOpen( false ) }, [ fullView ]);
     
    return (
       <div className = { styles.menuAsideRow }

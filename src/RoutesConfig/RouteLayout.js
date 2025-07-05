@@ -2,19 +2,17 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import LoadingCircle from 'components/features/LoadingCircle/LoadingCircle';
-
 import { setUserFalse } from 'store/modules/userReducer';
 
-import { loginUser } from 'CONSTANTS/Axios';
+import { loginUser, getPosts } from 'CONSTANTS/Axios';
 
-import { getPosts } from 'CONSTANTS/Axios';
+import LoadingCircle from 'components/features/LoadingCircle/LoadingCircle';
 
 const RouteLayout = ({ Page, pageType, redirectPath }) => {
    const dispatch = useDispatch();
    const user = useSelector( store => store.user );
    const isAuthenticated = useSelector( store => store.user.isAuthenticated );
-   
+
    useEffect(() => {
       if ( isAuthenticated ) getPosts( user, dispatch );
    }, [ isAuthenticated ])

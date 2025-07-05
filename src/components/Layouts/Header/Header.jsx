@@ -1,9 +1,9 @@
 import React from 'react';
 
-import styles from './Header.module.scss';
-
 import Logo from 'components/commons/Logo/Logo';
 import Navigation from 'components/features/Navigation/Navigation';
+
+import styles from './Header.module.scss';
 
 function Header() {
    

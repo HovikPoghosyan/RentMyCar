@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import classNames from 'classnames';
 
-import styles from './Profile.module.scss';
+import classNames from 'classnames';
 
 import MenuAside from 'components/features/MenuAside/MenuAside';
 import List from 'components/features/List/List';
+
+import styles from './Profile.module.scss';
 
 function Profile() {
    const ownCars = useSelector( store => store.list.ownCars );

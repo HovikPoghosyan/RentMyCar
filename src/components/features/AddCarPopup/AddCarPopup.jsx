@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import _ from 'lodash';
 import { 
    faCarRear,
    faGasPump,
@@ -8,30 +10,25 @@ import {
    faHandHoldingDollar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import _ from 'lodash';
 
-import styles from './AddCarPopup.module.scss';
+
+import { addNewCar, updateCar } from 'CONSTANTS/Axios';
 
 import { closeAddCarPopup, setEditingCar } from 'store/modules/listReducer';
-
-import MenuRowHOC from 'components/commons/MenuRowHOC/MenuRowHOC';
 
 import TransmissionSVG from 'assets/icons/Transmission';
 import PassengerSVG from 'assets/icons/Passenger';
 import DropZone from 'components/commons/DropZone/DropZone';
 import Button from 'components/commons/Button/Button';
 
-import { addNewCar, updateCar } from 'CONSTANTS/Axios';
+import MenuRowHOC from 'components/commons/MenuRowHOC/MenuRowHOC';
+
+import styles from './AddCarPopup.module.scss';
 
 function AddCarPopup( ) {
    const dispatch = useDispatch();
    const [ loading, setLoading ] = useState( false );
    const [ descriptionLength, setDescriptionLength ] = useState( 0 );
-   const isAddCarPopupOpen = useSelector( state => state.list.isAddCarPopupOpen );
-   const editingCar = useSelector( state => state.list.editingCar );
-   const countries = useSelector( store => store.menu.countries );
-   const carModels = useSelector( store => store.menu.models );
-   const user = useSelector( store => store.user );
    const [ newCar, setNewCar ] = useState({
       model: undefined,
       seats: undefined,
@@ -43,6 +40,11 @@ function AddCarPopup( ) {
       gear: undefined,
       description: undefined,
    });
+   const isAddCarPopupOpen = useSelector( state => state.list.isAddCarPopupOpen );
+   const editingCar = useSelector( state => state.list.editingCar );
+   const countries = useSelector( store => store.menu.countries );
+   const carModels = useSelector( store => store.menu.models );
+   const user = useSelector( store => store.user );
    
    useEffect(() => {
       if ( editingCar ) {

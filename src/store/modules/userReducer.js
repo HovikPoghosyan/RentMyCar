@@ -15,7 +15,7 @@ const appSlice = createSlice({
    initialState,
    reducers: {
       setUser( state, { payload } ) {
-         state = { 
+         return { 
             ...state, 
             ...payload, 
             isAuthenticated: true,
@@ -28,7 +28,7 @@ const appSlice = createSlice({
          state.rememberMe = !state.rememberMe;
       },
       signOut( state ) {
-         state = {
+         return {
             ...initialState,
             isAuthenticated: false,
          };

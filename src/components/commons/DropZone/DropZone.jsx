@@ -1,9 +1,9 @@
 import React, { 
-   useCallback,
    useEffect,
    useState,
 } from 'react';
-import _, { drop, values } from 'lodash';
+
+import _ from 'lodash';
 import { useDropzone } from 'react-dropzone';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -12,13 +12,14 @@ import {
    faCloudArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 
-import styles from './DropZone.module.scss';
-
 import Button from 'components/commons/Button/Button';
 
+import styles from './DropZone.module.scss';
  
 function DropZone({ returnImages, selectedImages }) {
    const [ droppedImages, setDroppedImages ] = useState( selectedImages || [] );
+   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
    const imageTypeRegExp = /^image\//;
    
    useEffect( () => {
@@ -36,7 +37,6 @@ function DropZone({ returnImages, selectedImages }) {
 
    const onDrop = acceptedFiles => {
       const newImages = acceptedFiles.map( image => {
-         
          if( !_.some( droppedImages, { name: image.name } ) && imageTypeRegExp.test( image.type ) ) {
             return {
                preview: URL.createObjectURL( image ),
@@ -48,8 +48,7 @@ function DropZone({ returnImages, selectedImages }) {
       setDroppedImages([ ...droppedImages, ...newImages ]);
    }
    
-   const deletImage = ( name ) => setDroppedImages( droppedImages.filter( image => image.name !== name ) )
-   const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop});
+   const deletImage = ( name ) => setDroppedImages( droppedImages.filter( image => image.name !== name ) );
    return (
       <div 
          { ...getRootProps() }

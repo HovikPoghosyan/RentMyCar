@@ -1,18 +1,17 @@
 import React from 'react';
-import { useOutlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-
-import styles from './Navigation.module.scss';
 
 import { openAddCarPopup } from 'store/modules/listReducer';
 
 import NavButton from 'components/commons/NavButton/NavButton';
 
+import styles from './Navigation.module.scss';
 
 function Navigation() {
    const dispatch = useDispatch();
    const { pathname } = useLocation();
+   
    let navigationData = [];
    
    switch ( pathname ) {

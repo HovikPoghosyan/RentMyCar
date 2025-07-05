@@ -1,18 +1,17 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import styles from './List.module.scss';
 import 'aos/dist/aos.css';
 
 import { setSorting } from 'store/modules/listReducer';
 
 import ListCard from 'components/commons/ListCard/ListCard';
 import ListMenuToggle from 'components/commons/ListMenuToggle/ListMenuToggle';
-
 import ToTopBtn from 'components/commons/ToTopBtn/ToTopBtn';
 import AddCarPopup from '../AddCarPopup/AddCarPopup';
 import LoadingCircle from '../LoadingCircle/LoadingCircle';
 
+import styles from './List.module.scss';
 
 
 function List({ data, isPrivate = false }) {

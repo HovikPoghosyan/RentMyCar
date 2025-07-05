@@ -1,7 +1,4 @@
-import { filter } from "lodash";
-
 const filterCarsList = ( filters, list ) => {
-   console.log('filtring')
    let result = [ ...list ];
    const {
       showFavorites,
@@ -17,7 +14,8 @@ const filterCarsList = ( filters, list ) => {
       minBags,
       maxBags,
       locations,
-   } = filters;console.log('list: ', list)
+   } = filters;
+
    result = result.filter( car => {
       if ( models.length && !models.some( model => model.id === car.model.id ) ) return false;
 

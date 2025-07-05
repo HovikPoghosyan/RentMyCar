@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+
+import _ from 'lodash';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
    faCaretUp,
    faCaretDown,
 } from '@fortawesome/free-solid-svg-icons';
-import _ from 'lodash';
 
 import styles from './MenuRowList.module.scss';
 
@@ -13,6 +14,7 @@ import MenuListItem from 'components/commons/MenuListItem/MenuListItem'
 
 function MenuRowList({ title, itemsList = [], type, selectedValues, returnValue }) {
    const [ isOpen, setIsOpen ] = useState( false );
+   
    return (
       <div className = { styles.itemRow }>
          <span className = { classNames( styles.title, {[ styles.titleIsOpen ]: isOpen }) }
