@@ -6,9 +6,9 @@ import classNames from 'classnames';
 import MenuAside from 'components/features/MenuAside/MenuAside';
 import List from 'components/features/List/List';
 
-import styles from './Profile.module.scss';
+import styles from './MyCars.module.scss';
 
-function Profile() {
+function MyCars() {
    const ownCars = useSelector( store => store.list.ownCars );
    
    return (
@@ -21,4 +21,4 @@ function Profile() {
    )
 }
 
-export default Profile;
+export default MyCars;

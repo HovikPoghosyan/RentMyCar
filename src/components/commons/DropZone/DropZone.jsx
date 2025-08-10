@@ -18,8 +18,7 @@ import styles from './DropZone.module.scss';
  
 function DropZone({ returnImages, selectedImages }) {
    const [ droppedImages, setDroppedImages ] = useState( selectedImages || [] );
-   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
+   console.log('droppedImages: ', droppedImages);
    const imageTypeRegExp = /^image\//;
    
    useEffect( () => {
@@ -46,7 +45,8 @@ function DropZone({ returnImages, selectedImages }) {
          }
       }).filter( Boolean );
       setDroppedImages([ ...droppedImages, ...newImages ]);
-   }
+   };
+   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
    
    const deletImage = ( name ) => setDroppedImages( droppedImages.filter( image => image.name !== name ) );
    return (

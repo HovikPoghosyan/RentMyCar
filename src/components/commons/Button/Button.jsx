@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import styles from './Button.module.scss';
 
-function Button({ name, functionality, style, isDisable }) {
+function Button({ name, functionality, style, isDisable = false }) {
 
    return (
       <button 

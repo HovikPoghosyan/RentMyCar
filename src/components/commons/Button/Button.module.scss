@@ -14,16 +14,8 @@
       background-color: #ccc;
    }
 
-   // &:hover {
-   //    background-color: #48bfee;
-   // }
-
    &:active {
       transform: scale( 0.95 );
-   }
-
-   &:not(:disabled):hover::before {
-      left: 0;
    }
 
    &:not(:disabled):hover {

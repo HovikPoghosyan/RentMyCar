@@ -1,0 +1,54 @@
+.mainImg {
+   object-fit: cover;
+   height: 100%;
+   object-position: center;
+}
+
+.dots {
+   width: 64px;
+   height: 44px;
+   overflow: hidden;
+   margin: 0 5px;
+   border: 2px solid rgba($color: #48bfee, $alpha: 0);
+   border-radius: 5px;
+   cursor: pointer;
+
+   &Active {
+      width: 64px;
+      height: 44px;
+      border: 2px solid rgba($color: #48bfee, $alpha: 1.0);
+   }
+
+   &:hover {
+      width: 64px;
+      height: 44px;
+      border: 4px solid rgba($color: #48bfee, $alpha: 1.0);
+   }
+}
+
+.sliderBtn {
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   margin: auto;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 28px;
+   width: 40px;
+   height: 40px;
+   border-radius: 50px;
+   background: rgba(255, 255, 255, 0.15);
+   box-shadow: 0 0px 12px rgba(0, 0, 0, 1);
+
+   &:hover {
+      background-color: rgba($color: #48bfee, $alpha: 0.7 );
+   }
+}
+
+.prevBtn {
+   left: 0;
+}
+.nextBtn {
+   right: 0;
+}

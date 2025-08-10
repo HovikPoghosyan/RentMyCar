@@ -30,7 +30,7 @@ function MenuRowHOC({ title, icon, itemsList, isOpen, showValue = false, type, r
    };
    
    return (
-      <MenuRow title = { showValue ? ( values?.[0]?.value?.name || values?.[0]?.value || title ) : title } icon = { icon } fullView = { isOpen } >
+      <MenuRow title = { showValue ? ( values?.[0]?.value?.name || values?.[0]?.value || title ) : title } icon = { icon } fullView = { isOpen } type = { type }>
          {
             itemsList.map( item => {
                if( item.type === 'list' ) {

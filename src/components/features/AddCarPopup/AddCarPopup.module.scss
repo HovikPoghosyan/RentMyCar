@@ -15,7 +15,6 @@
 
    &::-webkit-scrollbar-track {
       background-color: transparent;
-      margin: 7px;
    }
 }
 
@@ -23,7 +22,7 @@
    background-color: #fff;
    overflow-y: scroll;
    position: fixed;
-   top: 10%;
+   top: 5%;
    width: 80%;
    min-width: 300px;
    max-width: 420px;

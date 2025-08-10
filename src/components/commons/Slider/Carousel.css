@@ -1,0 +1,49 @@
+.alice-carousel__wrapper {
+   border-radius: 10px;
+   width: 100% !important;
+   height: 100% !important;
+}
+
+.alice-carousel__prev-btn {
+   position: absolute;
+   bottom: 0;
+   top: 0;
+   left: 10px;
+   margin: auto;
+   width: 25px;
+   height: 25px;
+}
+
+.alice-carousel__next-btn {
+   position: absolute;
+   bottom: 0;
+   top: 0;
+   right: 10px;
+   margin: auto;
+   display: inline-block;
+   width: 25px;
+   height: 25px;
+}
+
+.alice-carousel__dots {
+   position: absolute;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   margin: auto;
+   z-index: 999;
+}
+
+.alice-carousel__stage-item {
+   width: 100% !important;
+   height: 100% !important;
+   overflow: hidden;
+}
+
+.alice-carousel {
+   height: 100% !important;
+}
+
+.alice-carousel > div:first-child {
+   height: 100% !important;
+}

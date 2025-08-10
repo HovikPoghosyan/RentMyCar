@@ -26,11 +26,11 @@ function Navigation() {
          break;
       case '/carslist':
          navigationData = [
-            { textContent: 'Profile', link: '/profile' },
+            { textContent: 'My Cars', link: '/myCars' },
             { textContent: 'Add Car', functionality: () => dispatch( openAddCarPopup() ) },
          ];
          break;
-      case '/profile':
+      case '/myCars':
          navigationData = [
             { textContent: 'List', link: '/carslist' },
             { textContent: 'Add Car', functionality: () => dispatch( openAddCarPopup() ) },

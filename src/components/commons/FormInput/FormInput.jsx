@@ -35,6 +35,7 @@ function FormInput({ name, placeholder, value, onChange, status, type, condition
             ref = { inputRef }
             onChange = { onChange }
             onMouseEnter = { () => inputRef.current.focus() }
+            onMouseLeave = { () => inputRef.current.blur() }
             className = { styles.formInput }
             autoComplete = "off"
          />

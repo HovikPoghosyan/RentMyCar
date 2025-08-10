@@ -12,9 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-import { addNewCar, updateCar } from 'CONSTANTS/Axios';
-
-import { closeAddCarPopup, setEditingCar } from 'store/modules/listReducer';
+import { addNewCar, updateCar, closeAddCarPopup } from 'store/modules/listReducer';
 
 import TransmissionSVG from 'assets/icons/Transmission';
 import PassengerSVG from 'assets/icons/Passenger';
@@ -27,31 +25,39 @@ import styles from './AddCarPopup.module.scss';
 
 function AddCarPopup( ) {
    const dispatch = useDispatch();
-   const [ loading, setLoading ] = useState( false );
-   const [ descriptionLength, setDescriptionLength ] = useState( 0 );
-   const [ newCar, setNewCar ] = useState({
+   
+   const newCarInitialState = {
       model: undefined,
       seats: undefined,
       price: undefined,
-      bags: undefined,
-      location: undefined,
-      images: undefined,
       fuel: undefined,
       gear: undefined,
+      images: undefined,
+      location: undefined,
       description: undefined,
-   });
+   };
+
+   const [ descriptionLength, setDescriptionLength ] = useState( 0 );
+   const [ newCar, setNewCar ] = useState( newCarInitialState );
    const isAddCarPopupOpen = useSelector( state => state.list.isAddCarPopupOpen );
    const editingCar = useSelector( state => state.list.editingCar );
    const countries = useSelector( store => store.menu.countries );
    const carModels = useSelector( store => store.menu.models );
    const user = useSelector( store => store.user );
-   
+
    useEffect(() => {
       if ( editingCar ) {
          setNewCar( editingCar );
          setDescriptionLength( editingCar.description.length );
       }
    }, [ editingCar ]);
+   
+   useEffect(() => {
+      if ( !editingCar ) {
+         setNewCar( newCarInitialState );
+         setDescriptionLength( 0 );
+      }
+   }, [ isAddCarPopupOpen ])
 
    const handleDescription = ( event ) => {
       const newValue = event.target.value.replace(/\s{2,}/g, ' ');
@@ -63,39 +69,35 @@ function AddCarPopup( ) {
    }
 
    const addCar = ( ) => { 
-      setLoading( true );
-      addNewCar( user, { 
-         model_id: newCar.model.id,
-         city_id: newCar.location.id,
-         seats: newCar.seats,
-         price: newCar.price,
-         transmission: newCar.gear,
-         fuel: newCar.fuel,
-         images: newCar.images,
-      }, dispatch )
-      .then(() => {
-         setLoading( false );
-         dispatch( closeAddCarPopup() );
-      });
+      dispatch( addNewCar({ 
+         user, 
+         newCarData: {
+            model_id: newCar.model.id,
+            city_id: newCar.location.id,
+            seats: newCar.seats,
+            price: newCar.price,
+            transmission: newCar.gear,
+            fuel: newCar.fuel,
+            images: newCar.images,
+         }
+      }));
    };
 
    const editCar = () => {
-      setLoading( true );
-      updateCar( user, { 
-         id: editingCar.id,
-         model_id: newCar.model.id,
-         city_id: newCar.location.id,
-         seats: newCar.seats,
-         price: newCar.price,
-         transmission: newCar.gear,
-         fuel: newCar.fuel,
-         images: newCar.images.filter( current => { if ( current instanceof File ) return current }),
-         save_image_ids: newCar.images.filter( current => current?.id ).map( current => current.id ),
-      }, dispatch )
-      .then(() => {
-         setLoading( false );
-         dispatch( closeAddCarPopup() );
-      });
+      dispatch( updateCar({ 
+         user, 
+         updatedCarData: { 
+            id: editingCar.id,
+            model_id: newCar.model.id,
+            city_id: newCar.location.id,
+            seats: newCar.seats,
+            price: newCar.price,
+            transmission: newCar.gear,
+            fuel: newCar.fuel,
+            images: newCar.images.filter( current => { if ( current instanceof File ) return current }),
+            save_image_ids: newCar.images.filter( current => current?.id ).map( current => current.id ),
+         }
+      }))
    }
    
    const getData = ( newValues ) => {
@@ -173,15 +175,6 @@ function AddCarPopup( ) {
                itemsList = { Array.from({ length: 22 }, (_, i) => ({ type: "select", name: (( i + 1 ) * 10 ) + '$', functionality: () => {} })) }
                selectedValue = { editingCar ? { value: editingCar.price } : false }
             />
-            <MenuRowHOC 
-               title = "Bags"
-               type = "select"
-               showValue = { true } 
-               returnData = { getData }   
-               icon = { <FontAwesomeIcon icon = { faSuitcaseRolling }/> } 
-               itemsList = { Array.from({ length: 20 }, (_, i) => ({ type: "select", name: i + 1, functionality: () => {} })) }
-               selectedValue = { editingCar ? { value: editingCar.bags } : false }
-            />
             <MenuRowHOC
                title = "Location"
                type = "select"
@@ -193,7 +186,7 @@ function AddCarPopup( ) {
             />
             <div className = { styles.descriptionBlock }>
                <textarea 
-                  value = { newCar.description || '' }
+                  value = { newCar?.description || editingCar?.description || '' }
                   rows = { 4 } 
                   placeholder = "Description..." 
                   className = { styles.descriptionArea }
@@ -212,11 +205,10 @@ function AddCarPopup( ) {
             <div className = { styles.btns }>
                <Button 
                   name = { editingCar ? "Edit" : "Add" } 
-                  isDisable = { !( _.every(_.values( newCar ), value => value !== undefined ) && !loading && ( descriptionLength >= 40 ) ) || ( editingCar ? ( _.isEqual( newCar, editingCar ) ) : false ) }
+                  isDisable = { !(  _.every(_.values( newCar ), value => value !== undefined ) && ( descriptionLength >= 40 ) ) || ( editingCar ? ( _.isEqual( newCar, editingCar ) ) : false ) }
                   style = { styles.btn }
                   functionality = { editingCar ? editCar : addCar }/>
                <Button 
-                  isDisable = { loading }
                   name = "Close" 
                   style = { styles.btn }
                   functionality = { ( ) => dispatch( closeAddCarPopup() )}/>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { loginUser } from 'CONSTANTS/Axios';
+import { logInUser } from 'store/modules/userReducer';
 
 import DescriptionAside from 'components/features/DescriptionAside/DescriptionAside';
 import FormAside from 'components/features/FormAside/FormAside';
@@ -23,7 +23,7 @@ function LogIn() {
             <FormAside
                title = "LogIn"
                method = "GET"
-               submitFunction = { loginUser }
+               submitFunction = { logInUser }
                inputes = {{
                   email: { placeholder: "Email Address" },
                   password: { placeholder: "Password" },

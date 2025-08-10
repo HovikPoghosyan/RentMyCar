@@ -41,6 +41,7 @@ const filterCarsList = ( filters, list ) => {
 
    if ( cheaper ) result.sort( ( carOne, carTwo ) => parseInt( carOne.price ) - parseInt( carTwo.price ) );
    else if ( moreExpensive ) result.sort( ( carOne, carTwo ) => parseInt( carTwo.price ) - parseInt( carOne.price ) );
+   else result.sort( ( carOne, carTwo ) => new Date( carTwo.createdAt ) - new Date( carOne.createdAt ));
 
    return result;
 }

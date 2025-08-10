@@ -9,6 +9,7 @@ import ListCard from 'components/commons/ListCard/ListCard';
 import ListMenuToggle from 'components/commons/ListMenuToggle/ListMenuToggle';
 import ToTopBtn from 'components/commons/ToTopBtn/ToTopBtn';
 import AddCarPopup from '../AddCarPopup/AddCarPopup';
+import SelectedCarPopup from '../SelectedCarPopup/SelectedCarPopup';
 import LoadingCircle from '../LoadingCircle/LoadingCircle';
 
 import styles from './List.module.scss';
@@ -32,6 +33,9 @@ function List({ data, isPrivate = false }) {
          case 'More Expensive':
             dispatch( setSorting({ cheaper: false, moreExpensive: true }) );
             break;
+         case 'withoutPrice':
+            dispatch( setSorting({ cheaper: false, moreExpensive: false }) );
+            break;
          default:
             console.log("Unknown filter");
       }
@@ -41,8 +45,8 @@ function List({ data, isPrivate = false }) {
    return (
       <div className = { styles.list }>
          <div className = { styles.listMenu }>
-            <ListMenuToggle name = "favorite" valueOne = "All" valueTwo = "Favorites" startValue = "All" onToggle = { toggleSorting }/>
-            <ListMenuToggle name = "price" valueOne = "Cheaper" valueTwo = "More Expensive" onToggle = { toggleSorting }/>
+            <ListMenuToggle name = "favorite" valueOne = "All" valueTwo = "Favorites" startValue = "All" onToggle = { toggleSorting } uncheckedValue = "All"/>
+            <ListMenuToggle name = "price" valueOne = "Cheaper" valueTwo = "More Expensive" onToggle = { toggleSorting } uncheckedValue = "withoutPrice"/>
          </div>
          <div className = { styles.listGrid }>
             {
@@ -54,14 +58,14 @@ function List({ data, isPrivate = false }) {
                         ? 
                            <p className = { styles.noCarsMessage }>There aren`t any car yet</p> 
                         :
-                           data.map(( car, id ) => (
-                              <div key = { id }
+                           data.map(( car, id ) => {
+                              return <div key = { id }
                                  data-aos="zoom-out-up"
                                  data-aos-offset="20"
                                  data-aos-anchor-placement="top-bottom">
                                  <ListCard data = { car } isPrivate = { isPrivate } />
-                              </div>
-                  ))   
+                              </div>}
+                  )   
             }
             {
                
@@ -70,6 +74,7 @@ function List({ data, isPrivate = false }) {
          </div>
          <ToTopBtn />
          <AddCarPopup />
+         <SelectedCarPopup />
       </div>
    )
 }

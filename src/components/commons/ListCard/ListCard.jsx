@@ -13,6 +13,8 @@ import {
    faPen,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { setSelectedCar } from 'store/modules/listReducer';
+
 import { deletPost, addFavorite, removeFavorite  } from 'CONSTANTS/Axios';
 
 import Button from '../Button/Button';
@@ -28,7 +30,6 @@ function  ListCard({ data, isPrivate = false }) {
       model, 
       seats, 
       price, 
-      bags, 
       location, 
       images, 
       fuel, 
@@ -42,7 +43,7 @@ function  ListCard({ data, isPrivate = false }) {
    const handleCall = ( phoneNumber ) => window.location.href = `tel:${ phoneNumber }`;
    const handleEmail = ( email ) => window.location.href = `mailto:${ email }`;
    const openMap = ( location ) => window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent( location.name ), '_blank');
-   const handeleIsFavorite = () => {
+   const handeleIsFavorite = ( ) => {
       if ( isFavorite ) {
          dispatch( deletFavorite( id ) );
          removeFavorite( authUser, id );
@@ -53,44 +54,84 @@ function  ListCard({ data, isPrivate = false }) {
    }
 
    return (
-      <div className = { styles.carCard } data-aos = { aosStyle }>
+      <div 
+         className = { styles.carCard } 
+         data-aos = { aosStyle }
+         onClick = { () => dispatch( setSelectedCar( data )) }
+      >
          {
             isPrivate
                ?
-                  <span className = { styles.likeBtn }
-                     onClick = { () => dispatch( openAddCarPopup( data ) ) }
-                  >
-                     <FontAwesomeIcon icon = { faPen }/>
-                  </span>
+                  <Button 
+                     style = { styles.likeBtn }
+                     functionality = { event => {
+                        event.stopPropagation();
+                        dispatch( openAddCarPopup( data ) );
+                     }}
+                     name = { <FontAwesomeIcon icon = { faPen }/> }
+                  />
                :
-                  <span className = { classNames( styles.likeBtn, {[ styles.likeBtnSelected ] : isFavorite }) }
-                     onClick = { handeleIsFavorite }
-                  >
-                     <FontAwesomeIcon icon = { faHeart }/>
-                  </span>
+                  <Button 
+                     style = { classNames( styles.likeBtn, {[ styles.likeBtnSelected ] : isFavorite }) }
+                     functionality = { event => {
+                        event.stopPropagation();
+                        handeleIsFavorite();
+                     }}
+                     name = { <FontAwesomeIcon icon = { faHeart }/> }
+                  />
                   
          }
          <img 
-            src = { images[ 0 ].path  } 
+            src = { images[ 0 ]?.path  } 
             alt = "Car Image"
             className = { styles.photo }
          />
          <div className = { styles.details }>
          <h3 className = { styles.name }>{ model.name }</h3>
-         <p className = { styles.info }>{ `${ gear } | ${ seats } | ${ fuel } | ${ bags } Bags` }</p>
+         <p className = { styles.info }>{ `${ gear } | ${ seats } | ${ fuel }` }</p>
          <span className = { styles.price }>{ price }</span>
 
          <div className = { styles.infoButtonsRow }>
-            <FontAwesomeIcon className = { styles.infoButton } icon = { faMapLocationDot } color = '#ccc' onClick = { () => openMap( location ) }/>|
-            <FontAwesomeIcon className = { styles.infoButton } icon = { faPhone } color = '#ccc' onClick = { () => handleCall( '098 08 03 05' ) }/>|
-            <FontAwesomeIcon className = { styles.infoButton } icon = { faEnvelope } color = '#ccc' onClick = { () => handleEmail( user.email ) }/>
+            <FontAwesomeIcon 
+               className = { styles.infoButton } 
+               icon = { faMapLocationDot } 
+               color = '#ccc' 
+               onClick = { event => {
+                  event.stopPropagation();
+                  openMap( location );
+               }}/>|
+            <FontAwesomeIcon 
+               className = { styles.infoButton } 
+               icon = { faPhone } 
+               color = '#ccc' 
+               onClick = { event => {
+                  event.stopPropagation();
+                  handleCall( '098 08 03 05' );
+               }}/>|
+            <FontAwesomeIcon 
+               className = { styles.infoButton } 
+               icon = { faEnvelope } 
+               color = '#ccc' 
+               onClick = { event => {
+                  event.stopPropagation();
+                  handleEmail( user.email );
+               } }/>
          </div>
 
       
          <Button 
             name = { isPrivate ? "Remove" : "Rent Now" } 
             style = { classNames( styles.btn, isPrivate ? styles.removeBtn : styles.rentBtn ) }
-            functionality = { isPrivate ? () => { deletPost( authUser, id ); dispatch( deletCar( id ) ) } : () => console.log('Renting')}
+            functionality = { 
+               isPrivate 
+                  ? 
+                     event => { 
+                        event.stopPropagation();
+                        deletPost( authUser, id );
+                        dispatch( deletCar( id ) );
+                     } 
+                  : 
+                     () => console.log('Renting')}
          />
          </div>
       </div>

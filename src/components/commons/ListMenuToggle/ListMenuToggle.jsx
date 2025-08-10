@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import classNames from 'classnames';
 
 import styles from './ListMenuToggle.module.scss';
 
-function ListMenuToggle({ name, valueOne, valueTwo, startValue, onToggle }) {
+function ListMenuToggle({ name, valueOne, valueTwo, startValue, onToggle, uncheckedValue = null }) {
+   const [ selectedValue, setSelectedValue ] = useState( null );
+
+   useEffect(() => { setSelectedValue( startValue ) }, [])
+
+   const toggle = ( value ) => {
+      setSelectedValue( selectedValue === value ? startValue : value );
+      onToggle( selectedValue === value ? uncheckedValue : value )
+   }
 
    return (
       <div 
@@ -15,8 +23,9 @@ function ListMenuToggle({ name, valueOne, valueTwo, startValue, onToggle }) {
             type = 'radio'
             id = { valueOne }
             className = { styles.toggleInput }
-            onClick = { ( ) => onToggle( valueOne ) }
-            defaultChecked = { valueOne === startValue }
+            onClick = { ( ) => toggle( valueOne ) }
+            checked = { selectedValue == valueOne }
+            readOnly
          />
          <label htmlFor = { valueOne }
             className = { classNames( styles.toggleBtn, styles.leftBtn ) }  
@@ -26,8 +35,9 @@ function ListMenuToggle({ name, valueOne, valueTwo, startValue, onToggle }) {
             type = 'radio'
             id = { valueTwo }
             className = { styles.toggleInput }  
-            onClick = { ( ) => onToggle( valueTwo ) }
-            defaultChecked = { valueTwo === startValue }
+            onClick = { ( ) => toggle( valueTwo ) }
+            checked = { selectedValue == valueTwo }
+            readOnly
          />
          <label htmlFor = { valueTwo }
             className = { classNames( styles.toggleBtn, styles.rightBtn ) }  

@@ -14,15 +14,15 @@ function MenuListItem({ name, type, functionality = () => {}, selected = false }
       <div className = { styles.item }
          onClick = { functionality }
       >
-         <span>{ name }</span> 
+         <span className = "ListItemName">{ name }</span> 
          {
             type == 'check'
                ?
-                  <FontAwesomeIcon icon = { faCheck } color = { selected ? "rgb(72, 191, 238)" : null }/>
+                  <FontAwesomeIcon className = "ListItemIcon" icon = { faCheck } color = { selected ? "rgb(72, 191, 238)" : null }/>
                :
             type == 'select' && selected
                ?
-                  <FontAwesomeIcon icon = { faCheckCircle } color = "rgb(72, 191, 238)"/>
+                  <FontAwesomeIcon className = "ListItemIcon" icon = { faCheckCircle } color = "rgb(72, 191, 238)"/>
                :
                   null
          }

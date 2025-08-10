@@ -67,18 +67,18 @@ function FormAside({ title, inputes, submitFunction }) {
       event.preventDefault();
       setloading( true );
       setButtonIsDisable( true );
-      submitFunction( formData, dispatch )
-      .then(( result ) => {
-         if( result.isFailed ) setErrorMessage( result.errors.message );
+      dispatch( submitFunction( formData ) )
+      .then( ({ payload }) => {
+         if( payload.isFailed ) setErrorMessage( payload.errors.message );
 
-         if ( result.isFailed && title == 'LogIn' && result.errors?.list ) {
-            setErrorsList({ ...errorsList, ...Object.fromEntries( Object.keys( result.errors.list ).map( key => [ key, 'fail' ])) });
-         } else if ( result.isFailed && title == 'SignUp' && result.errors?.list )  {
-            setErrorsList({ ...errorsList, ...Object.fromEntries( Object.keys( result.errors.list ).map( key => [ key, 'fail' ])) });
+         if ( payload.isFailed && title == 'LogIn' && payload.errors?.list ) {
+            setErrorsList({ ...errorsList, ...Object.fromEntries( Object.keys( payload.errors.list ).map( key => [ key, 'fail' ])) });
+         } else if ( payload.isFailed && title == 'SignUp' && payload.errors?.list )  {
+            setErrorsList({ ...errorsList, ...Object.fromEntries( Object.keys( payload.errors.list ).map( key => [ key, 'fail' ])) });
          } 
-         if ( !result.isFailed && rememberMe ) {
+         if ( !payload.isFailed && rememberMe ) {
             localStorage.setItem('user', JSON.stringify({
-               token: result.token,
+               token: payload.token,
                ...formData,
             }));
             sessionStorage.removeItem('user');
@@ -98,8 +98,8 @@ function FormAside({ title, inputes, submitFunction }) {
             <h2 className = { styles.formTitle }>{ title }</h2>
             <p className = { styles.errorMessage }>{ errorMessage }</p>
             {  Object.keys( inputes ).map(( input ) => {
-                  const { placeholder } = inputes[ input ];
-
+                  const { placeholder, type = 'text' } = inputes[ input ];
+                  
                   return (
                         <FormInput 
                            key = { `${ input }_input` }
@@ -107,6 +107,7 @@ function FormAside({ title, inputes, submitFunction }) {
                            value = { formData[ input ] }
                            placeholder = { placeholder }
                            status = { errorsList[ input ] }
+                           type = { type }
                            conditions = { conditions[ input ] }
                            onChange = { ( event ) => handleInputChange( event, input ) }
                         />  

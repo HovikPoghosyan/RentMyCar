@@ -1,8 +1,6 @@
 import axios from "axios";
 
 import { setAllCars, setOwnCars, setLoading } from "store/modules/listReducer";
-import { setUser, setUserFalse } from "store/modules/userReducer";
-import { addCountries, addModels } from "store/modules/menuReducer";
 
 const API_BASE = 'https://retmycar-production.up.railway.app/api';
 const URLS = {
@@ -42,7 +40,7 @@ const ajax = async ( url, { method = 'get', headers = {}, data = {} } ) => {
 
 
 
-const loginUser = async ( userData, dispatch ) => {
+const fetchLogInUser = async ( userData ) => {
    const data = await ajax( URLS.login, {
       method: 'post',
       data: {
@@ -50,16 +48,11 @@ const loginUser = async ( userData, dispatch ) => {
          password: userData?.password,
       },
    });
-   if ( data.isFailed ) {
-      dispatch( setUserFalse() );
-      return data;
-   }
-   
-   dispatch( setUser({ ...userData, token: data.token, ...data.user }) );
+
    return data;
 };
 
-const signUpUser = async ( userData, dispatch ) => {
+const fetchSignUpUser = async ( userData ) => {
    const data = await ajax( URLS.register, {
       method: 'post',
       data: {
@@ -68,17 +61,10 @@ const signUpUser = async ( userData, dispatch ) => {
       },
    });
 
-   if (data.isFailed) {
-      dispatch(setUserFalse());
-      return data;
-   }
-
-   dispatch(setUser({ ...userData, token: data.token }));
    return data;
 };
 
-const getPosts = async ( user, dispatch ) => {
-   dispatch( setLoading( true ));
+const fetchPosts = async ( user ) => {
    const data = await ajax( URLS.posts, {
       headers: {
          'Authorization': `Bearer ${ user.token }`,
@@ -86,33 +72,6 @@ const getPosts = async ( user, dispatch ) => {
       method: 'get',
    });
 
-   if ( data.isFailed ) {
-      dispatch( setLoading( false ) );
-      return data;
-   };
-
-   const allCars = data.map( car => ({
-      id: car.id,
-      model: car.model,
-      seats: car.seats,
-      price: car.price,
-      bags: '3',
-      location: car.city,
-      images: car.images,
-      fuel: car.fuel,
-      gear: car.transmission,
-      description: 'gtnvum e lav vijakum voch mi xndir chuni',
-      isFavorite: car.is_favorite,
-      user: car.user,
-   }));
-   
-   const ownCars = allCars.filter( current => current.user.id === user.id );
-   console.log('user: ', user)
-   console.log('allCars: ', allCars)
-   console.log('ownCars: ', ownCars)
-   dispatch( setAllCars( allCars  ) );
-   dispatch( setOwnCars( ownCars ) ); 
-   dispatch( setLoading( false ) );
    return data;
 };
 
@@ -159,30 +118,27 @@ const removeFavorite = async ( user, id ) => {
    return data;
 };
 
-const getCountries = async ( dispatch ) => {
+const fetchCountries = async ( ) => {
    const data = await ajax( URLS.countries, {
       method: 'get'
    });
 
    if ( data.isFailed ) return data;
 
-   dispatch( addCountries( data ) );
    return data;
 };
 
-const getModels = async ( dispatch ) => {
+const fetchModels = async ( ) => {
    const data = await ajax( URLS.models, {
       method: 'get'
    } );
 
    if ( data.isFailed ) return data;
 
-   dispatch( addModels( data ) );
    return data;
 };
 
-const addNewCar = async ( user, newCarData, dispatch ) => {
-   dispatch( setLoading( true ) );
+const fetchAddNewCar = async ( user, newCarData ) => {
    const data = await ajax( URLS.posts, {
       method: 'post',
       headers: {
@@ -194,19 +150,11 @@ const addNewCar = async ( user, newCarData, dispatch ) => {
       }
    } );
 
-   if ( data.isFailed ) {
-      dispatch( setLoading( false ) );
-      return data;
-   };
-   
-   getPosts( user.name, dispatch );
-   dispatch( setLoading( false ) );
    return data;
 };
 
-const updateCar = async ( user, updatedCarData, dispatch ) => {
-   dispatch( setLoading( true ) );
-   console.log('updatedCarData: ', { ...updatedCarData})
+const fetchUpdateCar = async ( user, updatedCarData ) => {
+
    const data = await ajax( `${ URLS.posts }/${ updatedCarData.id }`, {
       method: 'post',
       headers: {
@@ -219,24 +167,17 @@ const updateCar = async ( user, updatedCarData, dispatch ) => {
       }
    } );
 
-   if ( data.isFailed ) {
-      dispatch( setLoading( false ) );
-      return data;
-   };
-   
-   getPosts( user.name, dispatch );
-   dispatch( setLoading( false ) );
    return data;
 };
 
 export {
-   loginUser,
-   signUpUser,
-   getPosts,
-   getCountries,
-   getModels,
-   addNewCar,
-   updateCar,
+   fetchLogInUser,
+   fetchSignUpUser,
+   fetchPosts,
+   fetchCountries,
+   fetchModels,
+   fetchAddNewCar,
+   fetchUpdateCar,
    deletPost,
    addFavorite,
    removeFavorite,

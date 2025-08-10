@@ -16,10 +16,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import classNames from 'classnames';
+
 import { setSelectedValues } from 'store/modules/menuReducer';
 import { signOut } from 'store/modules/userReducer';
 
-import { getCountries, getModels } from 'CONSTANTS/Axios';
+// import { getCountries, getModels } from 'CONSTANTS/Axios';
+import { getModels, getCountries } from 'store/modules/menuReducer';
 
 import PassengerSVG from 'assets/icons/Passenger';
 import TransmissionSVG from 'assets/icons/Transmission';
@@ -33,8 +36,14 @@ function MenuAside() {
    const [ isHovered, setIsHovered ] = useState( false );
    const countries = useSelector( store => store.menu.countries );
    const carModels = useSelector( store => store.menu.models );
+   const selectedCar = useSelector( store => store.list.selectedCar );
+   const isAddCarPopupOpen = useSelector( state => state.list.isAddCarPopupOpen );
+   const editingCar = useSelector( store => store.list.editingCar );
    
-   useEffect(() => { getCountries( dispatch ); getModels( dispatch ) }, [])
+   useEffect( () => { 
+      if ( !carModels.length ) dispatch( getModels() );
+      if ( !countries.length ) dispatch( getCountries() );
+   }, [])
 
    const getData = ( newValues ) => {
       const name = newValues?.category;
@@ -54,12 +63,12 @@ function MenuAside() {
       } else if ( [ 'seats', 'price', 'bags' ].includes( name.toLowerCase() ) ) dispatch( setSelectedValues({ [ 'min' + name ]: [], [ 'max' + name ]: [] }) );
       else dispatch( setSelectedValues({ [ name.toLowerCase() ]: [] }) );
    }
-
+   
    return ( 
       <aside 
-         className = { styles.menuAside }
-         onMouseEnter = { () => setIsHovered( true ) }
-         onMouseLeave = { () => setIsHovered( false ) }
+         className = { classNames( styles.menuAside, {[ styles.menuAsideIsHovered ]: isHovered }) }
+         onMouseEnter = { () => ( isAddCarPopupOpen || editingCar || selectedCar ) ? null : setIsHovered( true ) }
+         onMouseLeave = { () => ( isAddCarPopupOpen || editingCar || selectedCar ) ? null : setIsHovered( false ) }
       >
          <MenuRowHOC title = "Account" icon = { <FontAwesomeIcon icon = { faCircleUser }/> } isOpen = { isHovered }
             itemsList = {[{ name: 'Sign Out', functionality: () => { dispatch( signOut() ); localStorage.removeItem('user'); sessionStorage.removeItem('user') } }]}
@@ -91,11 +100,6 @@ function MenuAside() {
             itemsList = {[
                { type: 'list', title: 'Min', list: Array.from({ length: 20 }, ( _, i ) => ({ name: (( i + 1 ) * 10 ) + '$' }) ), listType: 'select' },
                { type: 'list', title: 'Max', list: Array.from({ length: 20 }, ( _, i ) => ({ name: (( i + 1 ) * 10 ) + '$' }) ), listType: 'select' }]}
-         />
-         <MenuRowHOC returnData = { getData } title = "Bags" type = "check" icon = { <FontAwesomeIcon icon = { faSuitcaseRolling }/> } isOpen = { isHovered }
-            itemsList = {[
-               { type: 'list', title: 'Min', list: Array.from({ length: 22 }, ( _, i ) => ({ name: i + 1 })), listType: 'select' },
-               { type: 'list', title: 'Max', list: Array.from({ length: 22 }, ( _, i ) => ({ name: i + 1 })), listType: 'select' }]}
          />
          <MenuRowHOC returnData = { getData } title = "Locations" type = "check" icon = { <FontAwesomeIcon icon = { faMapLocationDot }/> } isOpen = { isHovered }
             itemsList = { countries.map( location => { return { type: 'list', title: location.county, list: location.cities, listType: 'check' }}) }

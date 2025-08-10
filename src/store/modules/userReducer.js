@@ -1,4 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import { fetchLogInUser, fetchSignUpUser } from "CONSTANTS/Axios";
+
+const logInUser = createAsyncThunk(
+   'user/logInUser',
+   async ( userData, { rejectWithValue } ) => {
+      const data = await fetchLogInUser( userData );
+
+      if ( data.isFailed ) return rejectWithValue( data );
+      return { ...userData, token: data.token, ...data.user };
+   }
+); 
+
+const signUpUser = createAsyncThunk(
+   'user/signUpUser',
+   async ( userData, { rejectWithValue } ) => {
+      const data = await fetchSignUpUser( userData );
+
+      if ( data.isFailed ) return rejectWithValue( data );
+      return { ...userData, token: data.token, ...data.user };
+   }
+); 
 
 const initialState = {
    name: undefined,
@@ -33,6 +55,30 @@ const appSlice = createSlice({
             isAuthenticated: false,
          };
       },
+   },
+   extraReducers: ( builder ) => {
+      builder
+         .addCase( logInUser.fulfilled, ( state, { payload } ) => {
+            
+            return {
+               ...state,
+               ...payload,
+               isAuthenticated: true,
+            };
+         })
+         .addCase( logInUser.rejected, ( state ) => {
+            state.isAuthenticated = false;
+         })
+         .addCase( signUpUser.fulfilled, ( state, { payload } ) => {
+            return {
+               ...state,
+               ...payload,
+               isAuthenticated: true,
+            };
+         })
+         .addCase( signUpUser.rejected, ( state ) => {
+            state.isAuthenticated = false;
+         });
    }
 });
 
@@ -42,4 +88,5 @@ export const {
    setUserFalse,
    toggleRememberMe,
 } = appSlice.actions;
+export { logInUser, signUpUser };
 export default appSlice.reducer;

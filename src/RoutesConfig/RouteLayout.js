@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { setUserFalse } from 'store/modules/userReducer';
 
-import { loginUser, getPosts } from 'CONSTANTS/Axios';
+import { getPosts } from 'store/modules/listReducer';
+import { logInUser } from 'store/modules/userReducer';
 
 import LoadingCircle from 'components/features/LoadingCircle/LoadingCircle';
 
@@ -14,16 +15,16 @@ const RouteLayout = ({ Page, pageType, redirectPath }) => {
    const isAuthenticated = useSelector( store => store.user.isAuthenticated );
 
    useEffect(() => {
-      if ( isAuthenticated ) getPosts( user, dispatch );
+      if ( isAuthenticated ) dispatch( getPosts( user ) );
    }, [ isAuthenticated ])
 
    useEffect(() => {
       const userString = localStorage.getItem( 'user' ) || sessionStorage.getItem( 'user' );
       const userData = userString ? JSON.parse( userString ) : null;
       if ( isAuthenticated === undefined ) {
-         if ( !userData?.email && !userData?.password && !userData?.token ) dispatch( setUserFalse() );
+         if ( !userData?.email || !userData?.password || !userData?.token ) dispatch( setUserFalse() );
          else {
-            loginUser( userData, dispatch );
+            dispatch( logInUser( userData ) );
          }
       }
    }, [ user, isAuthenticated ]);

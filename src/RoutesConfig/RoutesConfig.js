@@ -7,7 +7,7 @@ const App = lazy(() => import('App/App'));
 const LogIn = lazy(() => import('Pages/LogIn/LogIn'));
 const SignUp = lazy(() => import('Pages/SignUp/SignUp'));
 const CarsList = lazy(() => import('Pages/CarsList/CarsList'));
-const Profile = lazy(() => import('Pages/Profile/Profile'));
+const MyCars = lazy(() => import('Pages/MyCars/MyCars'));
 const NotFound = lazy(() => import('Pages/NotFound/NotFound'));
 
 
@@ -34,8 +34,8 @@ function routesConfig() {
                element: <RouteLayout Page = { CarsList } pageType = 'private' redirectPath = '/login' />,
             },
             {
-               path: 'profile',
-               element: <RouteLayout Page = { Profile } pageType = 'private' redirectPath = '/login' />,
+               path: 'mycars',
+               element: <RouteLayout Page = { MyCars } pageType = 'private' redirectPath = '/login' />,
             },
             {
                path: '*',

@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { signUpUser } from 'CONSTANTS/Axios';
+import { signUpUser } from 'store/modules/userReducer';
 
 import DescriptionAside from 'components/features/DescriptionAside/DescriptionAside';
 import FormAside from 'components/features/FormAside/FormAside';

@@ -10,6 +10,7 @@
    position: relative;
    flex-grow: 1;
    border: 2px solid #ccc;
+   cursor: pointer;
  
    &:hover {
       transform: translateX( -5px ) translateY( -5px );
@@ -102,26 +103,35 @@
    position: absolute;
    right: 15px;
    top: 15px;
+   width: 40px;
+   height: 40px;
+   border-radius: 40px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
    margin: auto;
    z-index: 1;
    font-size: 25px;
-   color: #444;
+   // background-color: rgba($color: #ccc, $alpha: 0.5);
+   background-color: rgba($color: #ccc, $alpha: 0.5);
+   box-shadow: 0 0px 12px rgba(0, 0, 0, 1);
    color: #3aa2cc;
-   opacity: 0.4;
+   // opacity: 1;
    transition: all 0.3s;
 
    &:hover {
-      opacity: 1;
-      transform: scale( 1.2 );
-   }
-
-   &:active {
-      transform: scale( 1 );
+      background-color: rgba($color: #ccc, $alpha: 0.9);
+      font-size: 30px;
+      // font-size: 28px;
    }
 
    &Selected {
       opacity: 1;
       color: red;
+   }
+
+   &:active {
+      font-size: 27px;
    }
 }
 

@@ -8,9 +8,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './MenuRow.module.scss';
+import MenuListItemStyles from '../MenuListItem/MenuListItem.module.scss';
 
-function MenuRow({ title, icon, children, fullView = true, }) {
+function MenuRow({ title, icon, children, fullView = true, type }) {
    const [ isOpen, setIsOpen ] = useState( false );
+
+   const closeIfSelect = ( event ) => {
+      if ( event.target.className == MenuListItemStyles.item || event.target.className == 'ListItemName') setIsOpen( false );
+      console.log(event.target.className)
+   };
 
    useEffect(() => { if ( !fullView ) setIsOpen( false ) }, [ fullView ]);
     
@@ -30,7 +36,9 @@ function MenuRow({ title, icon, children, fullView = true, }) {
                <FontAwesomeIcon className = { styles.openBtn } icon = { isOpen ? faCaretUp : faCaretDown }/>
             </div>
          </div>
-         <div className = { classNames( styles.menuAsideRowModal, {[ styles.menuAsideRowModalOpen ]: isOpen }) }
+         <div className = { classNames( styles.menuAsideRowModal, {[ styles.menuAsideRowModalOpen ]: ( fullView && isOpen ) }) }
+         
+         onClick = { closeIfSelect }
          >
             { children }
          </div>
