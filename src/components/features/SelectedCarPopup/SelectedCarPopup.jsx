@@ -88,6 +88,10 @@ function SelectedCarPopup() {
                      value = { selectedCar.user.email }
                   />
                   <DescriptionRow 
+                     title = { 'Description' }
+                     value = { selectedCar.description }
+                  />
+                  <DescriptionRow 
                      title = { 'Price' }
                      value = { `${ selectedCar.price } / day` }
                   />

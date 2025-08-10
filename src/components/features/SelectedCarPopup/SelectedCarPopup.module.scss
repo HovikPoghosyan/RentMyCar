@@ -48,9 +48,9 @@
    width: 50%;
    padding:6px 20px;
    overflow-y: auto;
+   overflow-x: hidden;
    border-radius: 10px;
    margin-left: 5px;
-   background-color: #f0faff;
 
    &Title {
       font-weight: 900;
